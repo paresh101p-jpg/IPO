@@ -195,7 +195,7 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
 
             AllotmentPredictor(subscriptionStr = ipo.subscriptionText ?: ipo.subscriptionDetails?.totalApplications)
             
-            RiskMeter(redFlags = ipo.red_flags)
+            RiskMeter(redFlags = ipo.red_flags ?: emptyList())
             
             HypeMeter(hypeLevel = ipo.hype_meter ?: "Medium")
 
@@ -241,7 +241,7 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
             InfoRow("Total Debt", ipo.financials?.debt ?: "N/A")
             
             
-            PeerComparisonTable(peers = ipo.peerComparison)
+            PeerComparisonTable(peers = ipo.peerComparison ?: emptyList())
             
             SectionHeader("IPO Timeline")
             InfoRow("Open Date", ipo.openDate ?: "TBD")

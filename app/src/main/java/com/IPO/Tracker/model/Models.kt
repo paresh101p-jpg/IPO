@@ -6,7 +6,7 @@ data class IpoData(
     val type: String? = "Mainboard",
     val logoUrl: String? = null,
     val gmp: String,
-    val gmpTrend: List<Float> = emptyList(), // For graph
+    val gmpTrend: List<Float>? = emptyList(), // For graph
     val status: String, // Open, Closed, Upcoming, Listed
     val openDate: String?,
     val closeDate: String?,
@@ -21,7 +21,7 @@ data class IpoData(
     val subscriptionDetails: SubscriptionData? = null,
     val allotment_prob: String? = null,
     val hype_meter: String? = null,
-    val red_flags: List<String> = emptyList(),
+    val red_flags: List<String>? = emptyList(),
     val financials: CompanyFinancials? = null,
     val categoryReservation: String? = null,
     val aboutCompany: String? = null,
@@ -39,7 +39,7 @@ data class IpoData(
     val averageRating: Float = 0f,
     val totalRatingsCount: Int = 0,
     val whaleAlert: String? = null,
-    val peerComparison: List<PeerData> = emptyList()
+    val peerComparison: List<PeerData>? = emptyList()
 )
 
 data class PeerData(
