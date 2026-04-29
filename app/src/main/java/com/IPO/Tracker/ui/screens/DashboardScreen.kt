@@ -216,13 +216,18 @@ fun computeBadge(ipo: IpoData): String {
     val now = System.currentTimeMillis()
     return when (ipo.status.lowercase()) {
         "upcoming" -> {
-            val openDate = parseDate(ipo.openDate)
-            val diff = if (openDate != null) openDate.time - now else -1L
-            val dateRange = "${ipo.openDate ?: "?"} → ${ipo.closeDate ?: "?"}"
-            if (diff > 0) {
-                val days = diff / (1000 * 60 * 60 * 24)
-                if (days >= 1) "📌 $dateRange | ⏰ ${days}d mein khulega" else "📌 $dateRange | 🔥 Aaj khul raha hai!"
-            } else "📌 $dateRange"
+            val isDateTba = ipo.openDate.isNullOrBlank() || ipo.openDate.equals("TBA", ignoreCase = true) || ipo.openDate == "-"
+            if (isDateTba) {
+                "📌 To Be Announced"
+            } else {
+                val openDate = parseDate(ipo.openDate)
+                val diff = if (openDate != null) openDate.time - now else -1L
+                val dateRange = "${ipo.openDate} → ${ipo.closeDate}"
+                if (diff > 0) {
+                    val days = diff / (1000 * 60 * 60 * 24)
+                    if (days >= 1) "📌 $dateRange | ⏰ ${days}d mein khulega" else "📌 $dateRange | 🔥 Aaj khul raha hai!"
+                } else "📌 $dateRange"
+            }
         }
         "open" -> {
             val closeDate = parseDate(ipo.closeDate)
@@ -294,7 +299,12 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Column {
                     Text("Price & Shares", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text("${ipo.offerPrice ?: "TBD"} x ${ipo.lotSize ?: "?"}", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    val isPriceTba = ipo.offerPrice.isNullOrBlank() || ipo.offerPrice.equals("TBA", ignoreCase = true) || ipo.offerPrice == "-"
+                    if (isPriceTba) {
+                        Text("To Be Announced", style = MaterialTheme.typography.bodyMedium, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    } else {
+                        Text("${ipo.offerPrice} x ${ipo.lotSize ?: "?"}", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
+                    }
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("Total Amount", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
