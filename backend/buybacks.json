@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "id": "bb_Ajanta",
+        "name": "Ajanta Pharma Ltd",
+        "status": "Upcoming",
+        "buybackPrice": "₹2770",
+        "recordDate": "30 May 2026",
+        "openDate": "TBA",
+        "closeDate": "TBA",
+        "issueSizeAmount": "₹285 Cr",
+        "aboutCompany": "Specialty pharmaceutical company.",
+        "howToParticipate": "Apply via broker."
+    },
+    {
+        "id": "bb_Bajaj",
+        "name": "Bajaj Auto Ltd",
+        "status": "Current",
+        "buybackPrice": "₹10000",
+        "recordDate": "29 Feb 2026",
+        "openDate": "06 Mar 2026",
+        "closeDate": "13 Mar 2026",
+        "issueSizeAmount": "₹4000 Cr",
+        "aboutCompany": "Two-wheeler and three-wheeler manufacturer.",
+        "howToParticipate": "Apply via broker."
+    }
+]
