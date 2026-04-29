@@ -70,7 +70,7 @@ if __name__ == "__main__":
         name = item['name']
         if name not in all_ipos:
             # Add GMP if found
-            found_gmp = "N/A"
+            found_gmp = "TBA" if item['status'] == "Upcoming" else "N/A"
             for k in gmps:
                 if k.lower() in name.lower():
                     found_gmp = gmps[k]
@@ -78,7 +78,7 @@ if __name__ == "__main__":
             
             item["id"] = f"{item['type']}_{name.replace(' ', '_')[:25]}"
             item["gmp"] = found_gmp
-            item["hype_meter"] = "High" if found_gmp != "N/A" and "₹" in found_gmp else "Medium"
+            item["hype_meter"] = "High" if "₹" in found_gmp else "Medium"
             item["allotment_prob"] = "TBD"
             item["aboutCompany"] = f"Market data for {name}."
             all_ipos[name] = item
