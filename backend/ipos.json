@@ -1,192 +1,70 @@
 [
     {
         "id": "1",
-        "name": "Awfis Space Solutions",
-        "gmp": "₹115 (30% Gain)",
-        "gmpTrend": [80.0, 95.0, 100.0, 110.0, 115.0],
+        "name": "OnEMI Technology",
+        "gmp": "₹5 (2% Gain)",
         "status": "Upcoming",
-        "openDate": "22 May 2026",
-        "closeDate": "27 May 2026",
-        "listingDate": "30 May 2026",
-        "priceBand": "₹364 to ₹383",
-        "offerPrice": "₹383",
-        "issueSize": "₹598.93 Cr",
-        "lotSize": "39",
-        "retailLotsAllowed": "Min 1 Lot (₹14,937)",
-        "expectedPremium": "₹115",
+        "openDate": "30 Apr 2026",
+        "closeDate": "05 May 2026",
+        "listingDate": "10 May 2026",
+        "priceBand": "₹250 to ₹265",
+        "offerPrice": "₹265",
+        "issueSize": "₹850 Cr",
         "subscription": "0x",
-        "subscriptionDetails": {
-            "day1": "Not Started",
-            "day2": "Not Started",
-            "day3": "Not Started",
-            "retailTotal": "0x",
-            "totalApplications": "0"
-        },
         "allotment_prob": "TBD",
-        "hype_meter": "High",
-        "red_flags": [
-            "Low margin business"
-        ],
-        "financials": {
-            "revenue": "₹250 Cr (FY23)",
-            "profit": "₹45 Cr (FY23)",
-            "debt": "₹120 Cr"
-        },
-        "whaleAlert": "Big Bull Ashish Kacholia has reportedly subscribed heavily in the Anchor round!",
-        "peerComparison": [
-            {
-                "companyName": "Awfis (This IPO)",
-                "peRatio": "45.2x",
-                "marketCap": "₹2,500 Cr",
-                "cmp": "₹383"
-            },
-            {
-                "companyName": "WeWork India",
-                "peRatio": "N/A",
-                "marketCap": "Unlisted",
-                "cmp": "N/A"
-            }
-        ],
-        "categoryReservation": "QIB: 50%, NII: 15%, Retail: 35%",
-        "aboutCompany": "Awfis is one of the largest flexible workspace providers in India.",
-        "promoters": "Amit Ramani",
-        "issueObjective": "Funding capital expenditure, working capital, and general corporate purposes.",
-        "contactDetails": "info@awfis.com | +91-11-23456789",
-        "registrarDetails": "Link Intime India Private Ltd",
-        "allotmentLink": "https://linkintime.co.in/MIPO/Ipoallotment.html",
-        "anchorInvestors": "Ashish Kacholia (Big Bull) invested heavily. Mirae Asset MF: ₹50 Cr, Axis MF: ₹35 Cr, HDFC MF: ₹28 Cr allocated in Anchor round.",
-        "averageRating": 4.5,
-        "totalRatingsCount": 128
+        "hype_meter": "Medium",
+        "red_flags": ["New business model"],
+        "aboutCompany": "OnEMI Technology is a leading fintech company specializing in consumer credit and EMI solutions."
     },
     {
         "id": "2",
-        "name": "Go Digit General Insurance",
-        "gmp": "₹10 (3.6% Gain)",
-        "gmpTrend": [25.0, 20.0, 15.0, 12.0, 10.0],
+        "name": "Saraswati Saree Depot",
+        "gmp": "₹25 (15% Gain)",
         "status": "Open",
-        "openDate": "15 May 2026",
-        "closeDate": "17 May 2026",
-        "listingDate": "23 May 2026",
-        "priceBand": "₹258 to ₹272",
-        "offerPrice": "₹272",
-        "issueSize": "₹2614.65 Cr",
-        "lotSize": "55",
-        "retailLotsAllowed": "Min 1 Lot (₹14,960)",
-        "expectedPremium": "₹10",
-        "subscription": "9.60x",
-        "subscriptionDetails": {
-            "day1": "1.20x",
-            "day2": "4.50x",
-            "day3": "9.60x",
-            "retailTotal": "4.27x",
-            "totalApplications": "1245670"
-        },
-        "allotment_prob": "10%",
-        "hype_meter": "Medium",
-        "red_flags": [
-            "Regulatory warnings in past",
-            "Promoter shares pledged"
-        ],
-        "financials": {
-            "revenue": "₹5,267 Cr (FY23)",
-            "profit": "₹35 Cr (FY23)",
-            "debt": "₹0 Cr"
-        },
-        "peerComparison": [
-            {
-                "companyName": "Go Digit (This IPO)",
-                "peRatio": "650x",
-                "marketCap": "₹25,000 Cr",
-                "cmp": "₹272"
-            },
-            {
-                "companyName": "ICICI Lombard",
-                "peRatio": "45x",
-                "marketCap": "₹82,000 Cr",
-                "cmp": "₹1,650"
-            },
-            {
-                "companyName": "Star Health",
-                "peRatio": "52x",
-                "marketCap": "₹33,000 Cr",
-                "cmp": "₹560"
-            }
-        ],
-        "categoryReservation": "QIB: 75%, NII: 15%, Retail: 10%",
-        "aboutCompany": "Go Digit is a leading digital general insurance company.",
-        "promoters": "Kamesh Goyal",
-        "issueObjective": "Maintenance of solvency margins.",
-        "contactDetails": "hello@godigit.com",
-        "registrarDetails": "Link Intime India Private Ltd",
-        "allotmentLink": "https://linkintime.co.in/MIPO/Ipoallotment.html",
-        "averageRating": 3.8,
-        "totalRatingsCount": 542
+        "openDate": "24 Apr 2026",
+        "closeDate": "28 Apr 2026",
+        "listingDate": "02 May 2026",
+        "priceBand": "₹152 to ₹160",
+        "offerPrice": "₹160",
+        "issueSize": "₹160 Cr",
+        "subscription": "1.50x",
+        "allotment_prob": "66%",
+        "hype_meter": "High",
+        "red_flags": ["Regional concentration"],
+        "aboutCompany": "Saraswati Saree Depot is a major wholesaler and retailer of traditional Indian ethnic wear."
     },
     {
         "id": "3",
-        "name": "Tata Technologies",
-        "gmp": "₹414 (82% Gain)",
-        "gmpTrend": [320.0, 360.0, 390.0, 410.0, 414.0],
+        "name": "Adisoft Technologies",
+        "gmp": "₹22 (25% Gain)",
+        "status": "Open",
+        "openDate": "25 Apr 2026",
+        "closeDate": "29 Apr 2026",
+        "listingDate": "05 May 2026",
+        "priceBand": "₹80 to ₹85",
+        "offerPrice": "₹85",
+        "issueSize": "₹45 Cr",
+        "subscription": "2.12x",
+        "allotment_prob": "47%",
+        "hype_meter": "Medium",
+        "red_flags": ["SME IPO risk"],
+        "aboutCompany": "Adisoft Technologies provides IT consulting and software development services."
+    },
+    {
+        "id": "4",
+        "name": "Ishan International",
+        "gmp": "₹5 (10% Gain)",
         "status": "Closed",
-        "openDate": "22 Nov 2025",
-        "closeDate": "24 Nov 2025",
-        "listingDate": "30 Nov 2025",
-        "priceBand": "₹475 to ₹500",
-        "offerPrice": "₹500",
-        "issueSize": "₹3042.51 Cr",
-        "lotSize": "30",
-        "retailLotsAllowed": "Min 1 Lot (₹15,000)",
-        "expectedPremium": "₹414",
-        "subscription": "69.43x",
-        "subscriptionDetails": {
-            "day1": "6.54x",
-            "day2": "14.85x",
-            "day3": "69.43x",
-            "retailTotal": "16.50x",
-            "totalApplications": "7358124"
-        },
-        "allotment_prob": "1%",
-        "hype_meter": "Very High",
+        "openDate": "23 Apr 2026",
+        "closeDate": "25 Apr 2026",
+        "listingDate": "30 Apr 2026",
+        "priceBand": "₹50 to ₹54",
+        "offerPrice": "₹54",
+        "issueSize": "₹25 Cr",
+        "subscription": "10.45x",
+        "allotment_prob": "9.5%",
+        "hype_meter": "High",
         "red_flags": [],
-        "financials": {
-            "revenue": "₹4,414 Cr (FY23)",
-            "profit": "₹624 Cr (FY23)",
-            "debt": "₹0 Cr"
-        },
-        "peerComparison": [
-            {
-                "companyName": "Tata Tech (This IPO)",
-                "peRatio": "32x",
-                "marketCap": "₹20,000 Cr",
-                "cmp": "₹500"
-            },
-            {
-                "companyName": "KPIT Tech",
-                "peRatio": "85x",
-                "marketCap": "₹45,000 Cr",
-                "cmp": "₹1,500"
-            },
-            {
-                "companyName": "L&T Tech",
-                "peRatio": "40x",
-                "marketCap": "₹55,000 Cr",
-                "cmp": "₹5,200"
-            }
-        ],
-        "categoryReservation": "QIB: 50%, NII: 15%, Retail: 35%",
-        "aboutCompany": "Tata Technologies is a global engineering services company.",
-        "promoters": "Tata Motors Limited",
-        "issueObjective": "Offer for Sale (OFS). No fresh issue.",
-        "contactDetails": "investors@tatatechnologies.com",
-        "registrarDetails": "Link Intime India Private Ltd",
-        "allotmentLink": "https://linkintime.co.in/MIPO/Ipoallotment.html",
-        "listingPrice": "₹1,200 (140% Gain)",
-        "currentPrice": "₹1,050",
-        "fiftyTwoWeekHigh": "₹1,324",
-        "fiftyTwoWeekLow": "₹980",
-        "valuations": "P/E: 65x, Market Cap: ₹42,500 Cr",
-        "anchorInvestors": "HDFC Mutual Fund: ₹152 Cr, SBI Mutual Fund: ₹98 Cr, Goldman Sachs: ₹75 Cr, Nippon India MF: ₹45 Cr, Government of Singapore: ₹38 Cr. Total Anchor Book: ₹1,362 Cr (Massively Oversubscribed).",
-        "averageRating": 4.9,
-        "totalRatingsCount": 12500
+        "aboutCompany": "Ishan International is involved in the export of engineering goods and services."
     }
 ]
