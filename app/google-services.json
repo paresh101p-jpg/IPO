@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1083487681731",
+    "project_id": "ipo-traker",
+    "storage_bucket": "ipo-traker.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083487681731:android:edd54bd93825c1775c3676",
+        "android_client_info": {
+          "package_name": "com.IPO.Tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083487681731-ssrtl4761dvcap6p18u2vugc4jlbdb49.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.IPO.Tracker",
+            "certificate_hash": "e3926256f22ed5891f5b5056c4c19ca8876f708c"
+          }
+        },
+        {
+          "client_id": "1083487681731-a8hmqg3btnu1jc40lcptfm22e26l0l0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5l91HZakAmhP6wtAHChs3MOjb_EHWAZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083487681731-a8hmqg3btnu1jc40lcptfm22e26l0l0l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,6 +9,12 @@ interface ApiService {
     @GET("backend/ipos.json")
     suspend fun getIpos(): List<IpoData>
 
+    @GET("backend/buybacks.json")
+    suspend fun getBuybacks(): List<com.IPO.Tracker.model.BuybackData>
+
+    @GET("backend/news.json")
+    suspend fun getNews(): List<com.IPO.Tracker.model.NewsData>
+
     companion object {
         // Production API url from GitHub Raw
         private const val BASE_URL = "https://raw.githubusercontent.com/paresh101p-jpg/IPO/main/"

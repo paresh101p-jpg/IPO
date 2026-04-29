@@ -1,0 +1,11 @@
+*.hprof
+.gradle/
+.idea/
+app/build/
+build/
+local.properties
+.DS_Store
+*.log
+captures/
+.externalNativeBuild/
+.cxx/

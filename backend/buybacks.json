@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "TCS Buyback 2026",
+    "status": "Upcoming",
+    "buybackPrice": "₹4,150",
+    "recordDate": "25 May 2026",
+    "openDate": "30 May 2026",
+    "closeDate": "05 Jun 2026",
+    "issueSizeShares": "4 Cr",
+    "issueSizeAmount": "₹17,000 Cr",
+    "buybackRatio": "1:6",
+    "aboutCompany": "Tata Consultancy Services is an Indian multinational information technology services and consulting company.",
+    "howToParticipate": "Log in to your broker's app (Zerodha, Groww, etc.) and go to the Corporate Actions section.",
+    "investmentCalculation": "If you hold 60 shares on record date, 10 shares will be accepted guaranteed."
+  },
+  {
+    "id": "2",
+    "name": "Wipro Ltd",
+    "status": "Open",
+    "buybackPrice": "₹445",
+    "recordDate": "10 May 2026",
+    "openDate": "15 May 2026",
+    "closeDate": "22 May 2026",
+    "issueSizeShares": "26 Cr",
+    "issueSizeAmount": "₹12,000 Cr",
+    "buybackRatio": "TBD",
+    "aboutCompany": "Wipro Limited is an Indian multinational corporation that provides information technology, consultant and business process services.",
+    "howToParticipate": "Apply via your DP or Netbanking ASBA.",
+    "investmentCalculation": "Calculations will be updated after record date."
+  }
+]

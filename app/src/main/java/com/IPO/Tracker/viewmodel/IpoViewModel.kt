@@ -18,20 +18,46 @@ class IpoViewModel : ViewModel() {
     private val _uiState = MutableStateFlow<IpoUiState>(IpoUiState.Loading)
     val uiState: StateFlow<IpoUiState> = _uiState
 
+    private val _buybacks = MutableStateFlow<List<com.IPO.Tracker.model.BuybackData>>(emptyList())
+    val buybacks: StateFlow<List<com.IPO.Tracker.model.BuybackData>> = _buybacks
+
+    private val _news = MutableStateFlow<List<com.IPO.Tracker.model.NewsData>>(emptyList())
+    val news: StateFlow<List<com.IPO.Tracker.model.NewsData>> = _news
+
     private val apiService = ApiService.create()
 
     init {
-        fetchIpos()
+        fetchAllData()
     }
 
-    fun fetchIpos() {
+    fun fetchAllData() {
         viewModelScope.launch {
             _uiState.value = IpoUiState.Loading
             try {
-                val response = apiService.getIpos()
-                _uiState.value = IpoUiState.Success(response)
+                // Fetch IPOs (Primary)
+                try {
+                    val ipos = apiService.getIpos()
+                    _uiState.value = IpoUiState.Success(ipos)
+                } catch (e: Exception) {
+                    _uiState.value = IpoUiState.Error("IPO Data Error: ${e.message}")
+                }
+
+                // Fetch Buybacks (Secondary)
+                try {
+                    _buybacks.value = apiService.getBuybacks()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                // Fetch News (Secondary)
+                try {
+                    _news.value = apiService.getNews()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                
             } catch (e: Exception) {
-                _uiState.value = IpoUiState.Error("Error fetching data: ${e.message}")
+                _uiState.value = IpoUiState.Error("Connection Error: ${e.message}")
             }
         }
     }

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "headline": "Tata Technologies IPO lists at 140% premium",
+    "summary": "In a historic debut, Tata Technologies listed at ₹1,200, delivering massive listing gains to investors.",
+    "imageUrl": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=800",
+    "date": "2 hours ago"
+  },
+  {
+    "id": "2",
+    "headline": "Awfis Space Solutions GMP crosses ₹115",
+    "summary": "Grey market activity surges as Awfis gears up for its ₹598 Cr public issue next week.",
+    "imageUrl": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
+    "date": "5 hours ago"
+  },
+  {
+    "id": "3",
+    "headline": "SEBI introduces T+3 listing rule for all IPOs",
+    "summary": "New regulatory changes will ensure faster listing and unlocking of funds for retail investors.",
+    "imageUrl": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800",
+    "date": "1 day ago"
+  }
+]

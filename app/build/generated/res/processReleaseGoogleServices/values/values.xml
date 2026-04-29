@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">1083487681731-a8hmqg3btnu1jc40lcptfm22e26l0l0l.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">1083487681731</string>
+    <string name="google_api_key" translatable="false">AIzaSyB5l91HZakAmhP6wtAHChs3MOjb_EHWAZc</string>
+    <string name="google_app_id" translatable="false">1:1083487681731:android:edd54bd93825c1775c3676</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB5l91HZakAmhP6wtAHChs3MOjb_EHWAZc</string>
+    <string name="google_storage_bucket" translatable="false">ipo-traker.firebasestorage.app</string>
+    <string name="project_id" translatable="false">ipo-traker</string>
+</resources>
