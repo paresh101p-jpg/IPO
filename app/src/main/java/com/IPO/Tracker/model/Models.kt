@@ -67,17 +67,17 @@ data class BuybackData(
     val id: String,
     val name: String,
     val logoUrl: String? = null,
-    val status: String, // Current, Upcoming, Closed
-    val buybackPrice: String,
-    val recordDate: String,
-    val openDate: String,
-    val closeDate: String,
-    val issueSizeShares: String,
-    val issueSizeAmount: String,
-    val buybackRatio: String,
-    val aboutCompany: String,
-    val howToParticipate: String,
-    val investmentCalculation: String,
+    val status: String? = null, // Current, Upcoming, Closed
+    val buybackPrice: String? = null,
+    val recordDate: String? = null,
+    val openDate: String? = null,
+    val closeDate: String? = null,
+    val issueSizeShares: String? = null,
+    val issueSizeAmount: String? = null,
+    val buybackRatio: String? = null,
+    val aboutCompany: String? = null,
+    val howToParticipate: String? = null,
+    val investmentCalculation: String? = null,
     val docsLink: String? = null
 )
 
