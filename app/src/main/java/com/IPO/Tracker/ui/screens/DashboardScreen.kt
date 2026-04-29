@@ -307,7 +307,14 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(countdownText, modifier = Modifier.padding(8.dp), style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary, modifier = Modifier.fillMaxWidth(), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                Text(
+                    text = countdownText,
+                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                )
             }
             Spacer(modifier = Modifier.height(12.dp))
             HypeMeter(hypeLevel = ipo.hype_meter ?: "Medium")
