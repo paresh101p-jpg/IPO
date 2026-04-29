@@ -1,0 +1,32 @@
+[
+    {
+        "id": "1",
+        "name": "Awfis Space Solutions",
+        "gmp": "₹115 (30% Gain)",
+        "status": "Upcoming",
+        "openDate": "22 May",
+        "closeDate": "27 May",
+        "priceBand": "₹364 to ₹383",
+        "subscription": "0x",
+        "allotment_prob": "TBD",
+        "hype_meter": "High",
+        "red_flags": [
+            "Low margin business"
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Go Digit General Insurance",
+        "gmp": "₹10 (3.6% Gain)",
+        "status": "Closed",
+        "openDate": "15 May",
+        "closeDate": "17 May",
+        "priceBand": "₹258 to ₹272",
+        "subscription": "9.60x",
+        "allotment_prob": "10%",
+        "hype_meter": "Medium",
+        "red_flags": [
+            "Regulatory warnings in past"
+        ]
+    }
+]
