@@ -1,7 +1,7 @@
 [
   {
     "id": "1",
-    "name": "[Mainboard] OnEMI Technology Solutions Ltd. (Kissht)",
+    "name": "OnEMI Technology Solutions Ltd. (Kissht)",
     "type": "Mainboard",
     "status": "Upcoming",
     "gmp": "₹5 (2.92%)",
@@ -12,7 +12,7 @@
   },
   {
     "id": "2",
-    "name": "[Mainboard] Bagmane Prime Office REIT",
+    "name": "Bagmane Prime Office REIT",
     "type": "Mainboard",
     "status": "Upcoming",
     "gmp": "N/A",
@@ -23,7 +23,7 @@
   },
   {
     "id": "3",
-    "name": "[Mainboard] CMR Green Technologies Ltd.",
+    "name": "CMR Green Technologies Ltd.",
     "type": "Mainboard",
     "status": "Upcoming",
     "gmp": "N/A",
@@ -34,7 +34,7 @@
   },
   {
     "id": "4",
-    "name": "[Mainboard] Skyways Air Services Ltd.",
+    "name": "Skyways Air Services Ltd.",
     "type": "Mainboard",
     "status": "Upcoming",
     "gmp": "N/A",
@@ -45,7 +45,7 @@
   },
   {
     "id": "5",
-    "name": "[SME] Amba Auto Sales & Services Ltd.",
+    "name": "Amba Auto Sales & Services Ltd.",
     "type": "SME",
     "status": "Open",
     "gmp": "₹0 (0.00%)",
@@ -56,7 +56,7 @@
   },
   {
     "id": "6",
-    "name": "[SME] Recode Studios Ltd.",
+    "name": "Recode Studios Ltd.",
     "type": "SME",
     "status": "Upcoming",
     "gmp": "N/A",
@@ -67,7 +67,7 @@
   },
   {
     "id": "7",
-    "name": "[SME] Value 360 Communications Ltd.",
+    "name": "Value 360 Communications Ltd.",
     "type": "SME",
     "status": "Upcoming",
     "gmp": "N/A",
@@ -78,7 +78,7 @@
   },
   {
     "id": "8",
-    "name": "[SME] Adisoft Technologies Ltd.",
+    "name": "Adisoft Technologies Ltd.",
     "type": "SME",
     "status": "Closed",
     "gmp": "₹22 (12.79%)",
@@ -89,7 +89,7 @@
   },
   {
     "id": "9",
-    "name": "[SME] Mehul Telecom Ltd.",
+    "name": "Mehul Telecom Ltd.",
     "type": "SME",
     "status": "Closed",
     "gmp": "₹3.75 (3.83%)",
@@ -100,7 +100,7 @@
   },
   {
     "id": "10",
-    "name": "[Mainboard] Om Power Transmission Ltd.",
+    "name": "Om Power Transmission Ltd.",
     "type": "Mainboard",
     "status": "Closed",
     "gmp": "N/A",
@@ -111,7 +111,7 @@
   },
   {
     "id": "11",
-    "name": "[Mainboard] Sai Parenteral's Ltd.",
+    "name": "Sai Parenteral's Ltd.",
     "type": "Mainboard",
     "status": "Closed",
     "gmp": "₹0 (0.00%)",
@@ -122,7 +122,7 @@
   },
   {
     "id": "12",
-    "name": "[Mainboard] Powerica Ltd.",
+    "name": "Powerica Ltd.",
     "type": "Mainboard",
     "status": "Closed",
     "gmp": "N/A",
@@ -133,7 +133,7 @@
   },
   {
     "id": "13",
-    "name": "[Mainboard] Amir Chand Jagdish Kumar Ltd.",
+    "name": "Amir Chand Jagdish Kumar Ltd.",
     "type": "Mainboard",
     "status": "Closed",
     "gmp": "₹3.5 (1.65%)",
@@ -144,7 +144,7 @@
   },
   {
     "id": "14",
-    "name": "[Mainboard] Central Mine Planning Ltd.",
+    "name": "Central Mine Planning Ltd.",
     "type": "Mainboard",
     "status": "Closed",
     "gmp": "₹5 (2.91%)",
@@ -155,7 +155,7 @@
   },
   {
     "id": "15",
-    "name": "[Mainboard] GSP Crop Science Ltd.",
+    "name": "GSP Crop Science Ltd.",
     "type": "Mainboard",
     "status": "Closed",
     "gmp": "N/A",
@@ -166,7 +166,7 @@
   },
   {
     "id": "16",
-    "name": "[SME] Safety Controls & Devices Ltd.",
+    "name": "Safety Controls & Devices Ltd.",
     "type": "SME",
     "status": "Closed",
     "gmp": "N/A",
@@ -177,7 +177,7 @@
   },
   {
     "id": "17",
-    "name": "[SME] Emiac Technologies Ltd.",
+    "name": "Emiac Technologies Ltd.",
     "type": "SME",
     "status": "Closed",
     "gmp": "N/A",
@@ -188,7 +188,7 @@
   },
   {
     "id": "18",
-    "name": "[SME] Striders Impex Ltd.",
+    "name": "Striders Impex Ltd.",
     "type": "SME",
     "status": "Closed",
     "openDate": "26 Feb 2026",
@@ -198,7 +198,7 @@
   },
   {
     "id": "19",
-    "name": "[SME] Yaap Digital Ltd.",
+    "name": "Yaap Digital Ltd.",
     "type": "SME",
     "status": "Closed",
     "openDate": "25 Feb 2026",
@@ -208,7 +208,7 @@
   },
   {
     "id": "20",
-    "name": "[SME] Accord Transformer Ltd.",
+    "name": "Accord Transformer Ltd.",
     "type": "SME",
     "status": "Closed",
     "openDate": "23 Feb 2026",

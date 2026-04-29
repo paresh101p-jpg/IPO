@@ -30,7 +30,6 @@ def scrape_section(url, type_tag):
     try:
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
-        # Try finding the table by class if ID is dynamic
         table = soup.find('table', {'class': 'table'}) or soup.find('table')
         
         if table:
@@ -47,8 +46,8 @@ def scrape_section(url, type_tag):
                     
                     ipos.append({
                         "id": f"{type_tag}_{i}",
-                        "name": f"[{type_tag}] {name}",
-                        "type": type_tag,
+                        "name": name, # Removed tag from name
+                        "type": type_tag, # Keep type for filtering
                         "gmp": gmp,
                         "status": status,
                         "openDate": open_date,
@@ -63,7 +62,6 @@ def scrape_section(url, type_tag):
     return ipos
 
 def scrape_all():
-    # Investorgain URLs for Mainboard and SME
     mainboard_url = "https://www.investorgain.com/report/live-ipo-gmp/331/ipo/"
     sme_url = "https://www.investorgain.com/report/live-ipo-gmp/331/sme/"
     

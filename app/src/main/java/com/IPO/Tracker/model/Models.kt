@@ -3,6 +3,7 @@ package com.IPO.Tracker.model
 data class IpoData(
     val id: String,
     val name: String,
+    val type: String? = "Mainboard",
     val logoUrl: String? = null,
     val gmp: String,
     val gmpTrend: List<Float> = emptyList(), // For graph
@@ -18,8 +19,8 @@ data class IpoData(
     @com.google.gson.annotations.SerializedName("subscription")
     val subscriptionText: String? = null,
     val subscriptionDetails: SubscriptionData? = null,
-    val allotment_prob: String,
-    val hype_meter: String,
+    val allotment_prob: String? = null,
+    val hype_meter: String? = null,
     val red_flags: List<String> = emptyList(),
     val financials: CompanyFinancials? = null,
     val categoryReservation: String? = null,
