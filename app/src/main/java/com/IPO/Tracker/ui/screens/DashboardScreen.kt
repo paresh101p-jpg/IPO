@@ -302,7 +302,13 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
                 }
                 Column(horizontalAlignment = Alignment.End) {
                     Text("GMP", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(ipo.gmp, style = MaterialTheme.typography.bodyMedium, color = AccentSecondary, fontWeight = FontWeight.ExtraBold)
+                    Text(
+                        text = if (ipo.gmp == "TBA") "To Be Announced" else ipo.gmp,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontSize = if (ipo.gmp == "TBA") 10.sp else MaterialTheme.typography.bodyMedium.fontSize,
+                        color = AccentSecondary,
+                        fontWeight = FontWeight.ExtraBold
+                    )
                 }
             }
             

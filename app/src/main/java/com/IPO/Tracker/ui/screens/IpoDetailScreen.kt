@@ -125,7 +125,12 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
                     Spacer(modifier = Modifier.height(12.dp))
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Text("Grey Market Premium (GMP)", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = MaterialTheme.typography.titleMedium.fontSize)
-                        Text(ipo.gmp, fontWeight = FontWeight.ExtraBold, color = AccentSecondary, fontSize = MaterialTheme.typography.titleLarge.fontSize)
+                        Text(
+                            text = if (ipo.gmp == "TBA") "To Be Announced" else ipo.gmp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = AccentSecondary,
+                            fontSize = if (ipo.gmp == "TBA") 12.sp else MaterialTheme.typography.titleLarge.fontSize
+                        )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
