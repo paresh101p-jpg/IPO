@@ -120,23 +120,12 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Text("Offer Price", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = MaterialTheme.typography.titleMedium.fontSize)
-                        val isPriceTba = ipo.offerPrice.isNullOrBlank() || ipo.offerPrice.equals("TBA", ignoreCase = true) || ipo.offerPrice == "-"
-                        Text(
-                            text = if (isPriceTba) "To Be Announced" else (ipo.offerPrice ?: "TBD"),
-                            fontWeight = FontWeight.ExtraBold,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = if (isPriceTba) 12.sp else MaterialTheme.typography.titleLarge.fontSize
-                        )
+                        Text(ipo.offerPrice ?: "TBD", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onSurface, fontSize = MaterialTheme.typography.titleLarge.fontSize)
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Text("Grey Market Premium (GMP)", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = MaterialTheme.typography.titleMedium.fontSize)
-                        Text(
-                            text = if (ipo.gmp == "TBA") "To Be Announced" else ipo.gmp,
-                            fontWeight = FontWeight.ExtraBold,
-                            color = AccentSecondary,
-                            fontSize = if (ipo.gmp == "TBA") 12.sp else MaterialTheme.typography.titleLarge.fontSize
-                        )
+                        Text(ipo.gmp, fontWeight = FontWeight.ExtraBold, color = AccentSecondary, fontSize = MaterialTheme.typography.titleLarge.fontSize)
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
@@ -255,10 +244,9 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
             PeerComparisonTable(peers = ipo.peerComparison ?: emptyList())
             
             SectionHeader("IPO Timeline")
-            fun safeTba(value: String?): String = if (value.isNullOrBlank() || value.equals("TBA", true) || value == "-") "To Be Announced" else value
-            InfoRow("Open Date", safeTba(ipo.openDate))
-            InfoRow("Close Date", safeTba(ipo.closeDate))
-            InfoRow("Listing Date", safeTba(ipo.listingDate))
+            InfoRow("Open Date", ipo.openDate ?: "TBD")
+            InfoRow("Close Date", ipo.closeDate ?: "TBD")
+            InfoRow("Listing Date", ipo.listingDate ?: "TBD")
 
             // Anchor Investor Spy
             if (!ipo.anchorInvestors.isNullOrEmpty()) {
@@ -314,10 +302,10 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    InfoRow("💰 Issue Size", safeTba(ipo.issueSize))
-                    InfoRow("📆 Lot Size", if (safeTba(ipo.lotSize) == "To Be Announced") "To Be Announced" else "${ipo.lotSize} Shares")
-                    InfoRow("🏷️ Price Band", safeTba(ipo.offerPrice))
-                    InfoRow("💼 Min Investment", safeTba(ipo.retailLotsAllowed))
+                    InfoRow("💰 Issue Size", ipo.issueSize ?: "TBD")
+                    InfoRow("📆 Lot Size", "${ipo.lotSize ?: "?"} Shares")
+                    InfoRow("🏷️ Price Band", ipo.offerPrice ?: "TBD")
+                    InfoRow("💼 Min Investment", ipo.retailLotsAllowed ?: "TBD")
                     if (!ipo.registrarDetails.isNullOrEmpty()) {
                         InfoRow("🏗️ Registrar", ipo.registrarDetails)
                     }

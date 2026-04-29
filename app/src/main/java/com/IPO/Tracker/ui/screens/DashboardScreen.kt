@@ -299,12 +299,7 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Column {
                     Text("Price & Shares", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    val isPriceTba = ipo.offerPrice.isNullOrBlank() || ipo.offerPrice.equals("TBA", ignoreCase = true) || ipo.offerPrice == "-"
-                    if (isPriceTba) {
-                        Text("To Be Announced", style = MaterialTheme.typography.bodyMedium, fontSize = 10.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    } else {
-                        Text("${ipo.offerPrice} x ${ipo.lotSize ?: "?"}", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
-                    }
+                    Text("${ipo.offerPrice ?: "TBD"} x ${ipo.lotSize ?: "?"}", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold)
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("Total Amount", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -312,13 +307,7 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
                 }
                 Column(horizontalAlignment = Alignment.End) {
                     Text("GMP", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(
-                        text = if (ipo.gmp == "TBA") "To Be Announced" else ipo.gmp,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontSize = if (ipo.gmp == "TBA") 10.sp else MaterialTheme.typography.bodyMedium.fontSize,
-                        color = AccentSecondary,
-                        fontWeight = FontWeight.ExtraBold
-                    )
+                    Text(ipo.gmp, style = MaterialTheme.typography.bodyMedium, color = AccentSecondary, fontWeight = FontWeight.ExtraBold)
                 }
             }
             
