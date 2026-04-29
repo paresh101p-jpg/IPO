@@ -54,6 +54,7 @@
         "contactDetails": "info@awfis.com | +91-11-23456789",
         "registrarDetails": "Link Intime India Private Ltd",
         "allotmentLink": "https://linkintime.co.in/MIPO/Ipoallotment.html",
+        "anchorInvestors": "Ashish Kacholia (Big Bull) invested heavily. Mirae Asset MF: ₹50 Cr, Axis MF: ₹35 Cr, HDFC MF: ₹28 Cr allocated in Anchor round.",
         "averageRating": 4.5,
         "totalRatingsCount": 128
     },
@@ -184,6 +185,7 @@
         "fiftyTwoWeekHigh": "₹1,324",
         "fiftyTwoWeekLow": "₹980",
         "valuations": "P/E: 65x, Market Cap: ₹42,500 Cr",
+        "anchorInvestors": "HDFC Mutual Fund: ₹152 Cr, SBI Mutual Fund: ₹98 Cr, Goldman Sachs: ₹75 Cr, Nippon India MF: ₹45 Cr, Government of Singapore: ₹38 Cr. Total Anchor Book: ₹1,362 Cr (Massively Oversubscribed).",
         "averageRating": 4.9,
         "totalRatingsCount": 12500
     }
