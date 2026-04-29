@@ -3,7 +3,7 @@
         "id": "1",
         "name": "Awfis Space Solutions",
         "gmp": "₹115 (30% Gain)",
-        "gmpTrend": [100.0, 105.0, 110.0, 115.0],
+        "gmpTrend": [80.0, 95.0, 100.0, 110.0, 115.0],
         "status": "Upcoming",
         "openDate": "22 May 2026",
         "closeDate": "27 May 2026",
@@ -11,7 +11,7 @@
         "priceBand": "₹364 to ₹383",
         "offerPrice": "₹383",
         "issueSize": "₹598.93 Cr",
-        "lotSize": "39 Shares",
+        "lotSize": "39",
         "retailLotsAllowed": "Min 1 Lot (₹14,937)",
         "expectedPremium": "₹115",
         "subscription": "0x",
@@ -32,6 +32,21 @@
             "profit": "₹45 Cr (FY23)",
             "debt": "₹120 Cr"
         },
+        "whaleAlert": "Big Bull Ashish Kacholia has reportedly subscribed heavily in the Anchor round!",
+        "peerComparison": [
+            {
+                "companyName": "Awfis (This IPO)",
+                "peRatio": "45.2x",
+                "marketCap": "₹2,500 Cr",
+                "cmp": "₹383"
+            },
+            {
+                "companyName": "WeWork India",
+                "peRatio": "N/A",
+                "marketCap": "Unlisted",
+                "cmp": "N/A"
+            }
+        ],
         "categoryReservation": "QIB: 50%, NII: 15%, Retail: 35%",
         "aboutCompany": "Awfis is one of the largest flexible workspace providers in India.",
         "promoters": "Amit Ramani",
@@ -46,7 +61,7 @@
         "id": "2",
         "name": "Go Digit General Insurance",
         "gmp": "₹10 (3.6% Gain)",
-        "gmpTrend": [20.0, 15.0, 12.0, 10.0],
+        "gmpTrend": [25.0, 20.0, 15.0, 12.0, 10.0],
         "status": "Open",
         "openDate": "15 May 2026",
         "closeDate": "17 May 2026",
@@ -54,7 +69,7 @@
         "priceBand": "₹258 to ₹272",
         "offerPrice": "₹272",
         "issueSize": "₹2614.65 Cr",
-        "lotSize": "55 Shares",
+        "lotSize": "55",
         "retailLotsAllowed": "Min 1 Lot (₹14,960)",
         "expectedPremium": "₹10",
         "subscription": "9.60x",
@@ -63,18 +78,39 @@
             "day2": "4.50x",
             "day3": "9.60x",
             "retailTotal": "4.27x",
-            "totalApplications": "1,245,670"
+            "totalApplications": "1245670"
         },
         "allotment_prob": "10%",
         "hype_meter": "Medium",
         "red_flags": [
-            "Regulatory warnings in past"
+            "Regulatory warnings in past",
+            "Promoter shares pledged"
         ],
         "financials": {
             "revenue": "₹5,267 Cr (FY23)",
             "profit": "₹35 Cr (FY23)",
             "debt": "₹0 Cr"
         },
+        "peerComparison": [
+            {
+                "companyName": "Go Digit (This IPO)",
+                "peRatio": "650x",
+                "marketCap": "₹25,000 Cr",
+                "cmp": "₹272"
+            },
+            {
+                "companyName": "ICICI Lombard",
+                "peRatio": "45x",
+                "marketCap": "₹82,000 Cr",
+                "cmp": "₹1,650"
+            },
+            {
+                "companyName": "Star Health",
+                "peRatio": "52x",
+                "marketCap": "₹33,000 Cr",
+                "cmp": "₹560"
+            }
+        ],
         "categoryReservation": "QIB: 75%, NII: 15%, Retail: 10%",
         "aboutCompany": "Go Digit is a leading digital general insurance company.",
         "promoters": "Kamesh Goyal",
@@ -89,7 +125,7 @@
         "id": "3",
         "name": "Tata Technologies",
         "gmp": "₹414 (82% Gain)",
-        "gmpTrend": [300.0, 350.0, 380.0, 414.0],
+        "gmpTrend": [320.0, 360.0, 390.0, 410.0, 414.0],
         "status": "Closed",
         "openDate": "22 Nov 2025",
         "closeDate": "24 Nov 2025",
@@ -97,7 +133,7 @@
         "priceBand": "₹475 to ₹500",
         "offerPrice": "₹500",
         "issueSize": "₹3042.51 Cr",
-        "lotSize": "30 Shares",
+        "lotSize": "30",
         "retailLotsAllowed": "Min 1 Lot (₹15,000)",
         "expectedPremium": "₹414",
         "subscription": "69.43x",
@@ -106,20 +142,38 @@
             "day2": "14.85x",
             "day3": "69.43x",
             "retailTotal": "16.50x",
-            "totalApplications": "7,358,124"
+            "totalApplications": "7358124"
         },
         "allotment_prob": "1%",
         "hype_meter": "Very High",
-        "red_flags": [
-            "None"
-        ],
+        "red_flags": [],
         "financials": {
             "revenue": "₹4,414 Cr (FY23)",
             "profit": "₹624 Cr (FY23)",
             "debt": "₹0 Cr"
         },
+        "peerComparison": [
+            {
+                "companyName": "Tata Tech (This IPO)",
+                "peRatio": "32x",
+                "marketCap": "₹20,000 Cr",
+                "cmp": "₹500"
+            },
+            {
+                "companyName": "KPIT Tech",
+                "peRatio": "85x",
+                "marketCap": "₹45,000 Cr",
+                "cmp": "₹1,500"
+            },
+            {
+                "companyName": "L&T Tech",
+                "peRatio": "40x",
+                "marketCap": "₹55,000 Cr",
+                "cmp": "₹5,200"
+            }
+        ],
         "categoryReservation": "QIB: 50%, NII: 15%, Retail: 35%",
-        "aboutCompany": "Tata Technologies is a global engineering services company offering product development and digital solutions.",
+        "aboutCompany": "Tata Technologies is a global engineering services company.",
         "promoters": "Tata Motors Limited",
         "issueObjective": "Offer for Sale (OFS). No fresh issue.",
         "contactDetails": "investors@tatatechnologies.com",
