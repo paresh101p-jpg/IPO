@@ -89,8 +89,10 @@ if __name__ == "__main__":
     
     # IPOs
     ipos = scrape_all()
-    if ipos:
+    if len(ipos) > 5:
         with open(os.path.join(base_path, 'ipos.json'), 'w') as f: json.dump(ipos, f, indent=4)
         print(f"DONE! Saved {len(ipos)} IPOs.")
+    else:
+        print("WARNING: Scraper returned too few IPOs. Keeping old data for safety.")
     
     # (Keep Buybacks and News logic same)
