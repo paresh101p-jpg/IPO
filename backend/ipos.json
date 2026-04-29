@@ -3,30 +3,134 @@
         "id": "1",
         "name": "Awfis Space Solutions",
         "gmp": "₹115 (30% Gain)",
+        "gmpTrend": [100.0, 105.0, 110.0, 115.0],
         "status": "Upcoming",
-        "openDate": "22 May",
-        "closeDate": "27 May",
+        "openDate": "22 May 2026",
+        "closeDate": "27 May 2026",
+        "listingDate": "30 May 2026",
         "priceBand": "₹364 to ₹383",
+        "offerPrice": "₹383",
+        "issueSize": "₹598.93 Cr",
+        "lotSize": "39 Shares",
+        "retailLotsAllowed": "Min 1 Lot (₹14,937)",
+        "expectedPremium": "₹115",
         "subscription": "0x",
+        "subscriptionDetails": {
+            "day1": "Not Started",
+            "day2": "Not Started",
+            "day3": "Not Started",
+            "retailTotal": "0x",
+            "totalApplications": "0"
+        },
         "allotment_prob": "TBD",
         "hype_meter": "High",
         "red_flags": [
             "Low margin business"
-        ]
+        ],
+        "financials": {
+            "revenue": "₹250 Cr (FY23)",
+            "profit": "₹45 Cr (FY23)",
+            "debt": "₹120 Cr"
+        },
+        "categoryReservation": "QIB: 50%, NII: 15%, Retail: 35%",
+        "aboutCompany": "Awfis is one of the largest flexible workspace providers in India.",
+        "promoters": "Amit Ramani",
+        "issueObjective": "Funding capital expenditure, working capital, and general corporate purposes.",
+        "contactDetails": "info@awfis.com | +91-11-23456789",
+        "registrarDetails": "Link Intime India Private Ltd",
+        "allotmentLink": "https://linkintime.co.in/MIPO/Ipoallotment.html",
+        "averageRating": 4.5,
+        "totalRatingsCount": 128
     },
     {
         "id": "2",
         "name": "Go Digit General Insurance",
         "gmp": "₹10 (3.6% Gain)",
-        "status": "Closed",
-        "openDate": "15 May",
-        "closeDate": "17 May",
+        "gmpTrend": [20.0, 15.0, 12.0, 10.0],
+        "status": "Open",
+        "openDate": "15 May 2026",
+        "closeDate": "17 May 2026",
+        "listingDate": "23 May 2026",
         "priceBand": "₹258 to ₹272",
+        "offerPrice": "₹272",
+        "issueSize": "₹2614.65 Cr",
+        "lotSize": "55 Shares",
+        "retailLotsAllowed": "Min 1 Lot (₹14,960)",
+        "expectedPremium": "₹10",
         "subscription": "9.60x",
+        "subscriptionDetails": {
+            "day1": "1.20x",
+            "day2": "4.50x",
+            "day3": "9.60x",
+            "retailTotal": "4.27x",
+            "totalApplications": "1,245,670"
+        },
         "allotment_prob": "10%",
         "hype_meter": "Medium",
         "red_flags": [
             "Regulatory warnings in past"
-        ]
+        ],
+        "financials": {
+            "revenue": "₹5,267 Cr (FY23)",
+            "profit": "₹35 Cr (FY23)",
+            "debt": "₹0 Cr"
+        },
+        "categoryReservation": "QIB: 75%, NII: 15%, Retail: 10%",
+        "aboutCompany": "Go Digit is a leading digital general insurance company.",
+        "promoters": "Kamesh Goyal",
+        "issueObjective": "Maintenance of solvency margins.",
+        "contactDetails": "hello@godigit.com",
+        "registrarDetails": "Link Intime India Private Ltd",
+        "allotmentLink": "https://linkintime.co.in/MIPO/Ipoallotment.html",
+        "averageRating": 3.8,
+        "totalRatingsCount": 542
+    },
+    {
+        "id": "3",
+        "name": "Tata Technologies",
+        "gmp": "₹414 (82% Gain)",
+        "gmpTrend": [300.0, 350.0, 380.0, 414.0],
+        "status": "Closed",
+        "openDate": "22 Nov 2025",
+        "closeDate": "24 Nov 2025",
+        "listingDate": "30 Nov 2025",
+        "priceBand": "₹475 to ₹500",
+        "offerPrice": "₹500",
+        "issueSize": "₹3042.51 Cr",
+        "lotSize": "30 Shares",
+        "retailLotsAllowed": "Min 1 Lot (₹15,000)",
+        "expectedPremium": "₹414",
+        "subscription": "69.43x",
+        "subscriptionDetails": {
+            "day1": "6.54x",
+            "day2": "14.85x",
+            "day3": "69.43x",
+            "retailTotal": "16.50x",
+            "totalApplications": "7,358,124"
+        },
+        "allotment_prob": "1%",
+        "hype_meter": "Very High",
+        "red_flags": [
+            "None"
+        ],
+        "financials": {
+            "revenue": "₹4,414 Cr (FY23)",
+            "profit": "₹624 Cr (FY23)",
+            "debt": "₹0 Cr"
+        },
+        "categoryReservation": "QIB: 50%, NII: 15%, Retail: 35%",
+        "aboutCompany": "Tata Technologies is a global engineering services company offering product development and digital solutions.",
+        "promoters": "Tata Motors Limited",
+        "issueObjective": "Offer for Sale (OFS). No fresh issue.",
+        "contactDetails": "investors@tatatechnologies.com",
+        "registrarDetails": "Link Intime India Private Ltd",
+        "allotmentLink": "https://linkintime.co.in/MIPO/Ipoallotment.html",
+        "listingPrice": "₹1,200 (140% Gain)",
+        "currentPrice": "₹1,050",
+        "fiftyTwoWeekHigh": "₹1,324",
+        "fiftyTwoWeekLow": "₹980",
+        "valuations": "P/E: 65x, Market Cap: ₹42,500 Cr",
+        "averageRating": 4.9,
+        "totalRatingsCount": 12500
     }
 ]
