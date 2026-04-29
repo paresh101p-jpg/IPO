@@ -22,62 +22,65 @@ def calculate_allotment(subscription_text):
     except:
         return "TBD"
 
-def scrape_ipo_data():
-    url = "https://www.investorgain.com/report/live-ipo-gmp/331/"
+def scrape_section(url, type_tag):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
     }
-    
+    ipos = []
     try:
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
-        table = soup.find('table', {'id': 'DataTables_Table_0'})
+        # Try finding the table by class if ID is dynamic
+        table = soup.find('table', {'class': 'table'}) or soup.find('table')
         
-        ipos = []
-        if not table:
-            # Fallback mock data if table changes
-            return [{"id":"1","name":"Mock Data (Scraper Failed)","gmp":"₹0","status":"Error","subscription":"0x","allotment_prob":"0%","hype_meter":"Low","red_flags":["Scraping error"]}]
-
-        rows = table.find('tbody').find_all('tr')
-        for i, row in enumerate(rows[:10]): # Get top 10 recent IPOs
-            cols = row.find_all('td')
-            if len(cols) >= 8:
-                name = cols[0].text.strip()
-                gmp = cols[2].text.strip()
-                open_date = cols[5].text.strip()
-                close_date = cols[6].text.strip()
-                status = cols[7].text.strip()
-                subscription = cols[4].text.strip() if cols[4].text.strip() else "0x"
-                
-                # Some dummy red flags logic based on GMP
-                red_flags = ["None"]
-                if "0" in gmp and len(gmp) < 5:
-                    red_flags = ["Low demand in grey market", "High risk"]
-
-                ipos.append({
-                    "id": str(i+1),
-                    "name": name,
-                    "gmp": gmp,
-                    "status": status,
-                    "openDate": open_date,
-                    "closeDate": close_date,
-                    "priceBand": "TBD",
-                    "subscription": subscription,
-                    "allotment_prob": calculate_allotment(subscription),
-                    "hype_meter": determine_hype(subscription),
-                    "red_flags": red_flags
-                })
-        return ipos
+        if table:
+            rows = table.find('tbody').find_all('tr')
+            for i, row in enumerate(rows[:15]):
+                cols = row.find_all('td')
+                if len(cols) >= 8:
+                    name = cols[0].text.strip()
+                    gmp = cols[2].text.strip()
+                    open_date = cols[5].text.strip()
+                    close_date = cols[6].text.strip()
+                    status = cols[7].text.strip()
+                    subscription = cols[4].text.strip() if cols[4].text.strip() else "0x"
+                    
+                    ipos.append({
+                        "id": f"{type_tag}_{i}",
+                        "name": f"[{type_tag}] {name}",
+                        "type": type_tag,
+                        "gmp": gmp,
+                        "status": status,
+                        "openDate": open_date,
+                        "closeDate": close_date,
+                        "subscription": subscription,
+                        "allotment_prob": calculate_allotment(subscription),
+                        "hype_meter": determine_hype(subscription),
+                        "aboutCompany": f"{name} is a company in the {type_tag} segment."
+                    })
     except Exception as e:
-        print(f"Error scraping: {e}")
-        return []
+        print(f"Error scraping {type_tag}: {e}")
+    return ipos
+
+def scrape_all():
+    # Investorgain URLs for Mainboard and SME
+    mainboard_url = "https://www.investorgain.com/report/live-ipo-gmp/331/ipo/"
+    sme_url = "https://www.investorgain.com/report/live-ipo-gmp/331/sme/"
+    
+    print("Scraping Mainboard IPOs...")
+    mainboard_ipos = scrape_section(mainboard_url, "Mainboard")
+    
+    print("Scraping SME IPOs...")
+    sme_ipos = scrape_section(sme_url, "SME")
+    
+    return mainboard_ipos + sme_ipos
 
 if __name__ == "__main__":
-    print("Scraping live IPO data...")
-    data = scrape_ipo_data()
-    
-    # Save to JSON file
-    file_path = os.path.join(os.path.dirname(__file__), 'ipos.json')
-    with open(file_path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-    print(f"Successfully saved {len(data)} IPOs to {file_path}")
+    all_data = scrape_all()
+    if all_data:
+        file_path = os.path.join(os.path.dirname(__file__), 'ipos.json')
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(all_data, f, ensure_ascii=False, indent=4)
+        print(f"Successfully saved {len(all_data)} IPOs to {file_path}")
+    else:
+        print("No data scraped. Check website structure.")
