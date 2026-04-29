@@ -19,7 +19,7 @@ class DataSyncWorker(
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             val apiService = ApiService.create()
-            val ipos = apiService.getIpos(System.currentTimeMillis())
+            val ipos = apiService.getIpos()
             
             // Check for new IPOs
             val prefs = context.getSharedPreferences("ipo_prefs", Context.MODE_PRIVATE)

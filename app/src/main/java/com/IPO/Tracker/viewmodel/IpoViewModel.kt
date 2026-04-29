@@ -36,8 +36,7 @@ class IpoViewModel : ViewModel() {
             try {
                 // Fetch IPOs (Primary)
                 try {
-                    val timestamp = System.currentTimeMillis()
-                    val ipos = apiService.getIpos(timestamp)
+                    val ipos = apiService.getIpos()
                     _uiState.value = IpoUiState.Success(ipos)
                 } catch (e: Exception) {
                     _uiState.value = IpoUiState.Error("IPO Data Error: ${e.message}")
@@ -45,14 +44,14 @@ class IpoViewModel : ViewModel() {
 
                 // Fetch Buybacks (Secondary)
                 try {
-                    _buybacks.value = apiService.getBuybacks(System.currentTimeMillis())
+                    _buybacks.value = apiService.getBuybacks()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
                 // Fetch News (Secondary)
                 try {
-                    _news.value = apiService.getNews(System.currentTimeMillis())
+                    _news.value = apiService.getNews()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

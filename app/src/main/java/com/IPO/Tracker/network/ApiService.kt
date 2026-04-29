@@ -8,13 +8,13 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("backend/ipos.json")
-    suspend fun getIpos(@Query("v") version: Long): List<IpoData>
+    suspend fun getIpos(): List<IpoData>
 
     @GET("backend/buybacks.json")
-    suspend fun getBuybacks(@Query("v") version: Long): List<com.IPO.Tracker.model.BuybackData>
+    suspend fun getBuybacks(): List<com.IPO.Tracker.model.BuybackData>
 
     @GET("backend/news.json")
-    suspend fun getNews(@Query("v") version: Long): List<com.IPO.Tracker.model.NewsData>
+    suspend fun getNews(): List<com.IPO.Tracker.model.NewsData>
 
     companion object {
         // Production API url from GitHub Raw
