@@ -289,8 +289,11 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
                         )
                     }
                 }
+                val isDateTba = ipo.openDate.isNullOrBlank() || ipo.openDate.equals("TBA", ignoreCase = true) || ipo.openDate == "-"
+                val displayStatus = if (ipo.status.equals("Upcoming", ignoreCase = true) && isDateTba) "To Be Announced" else ipo.status
+
                 Badge(containerColor = if (ipo.status.equals("Open", true)) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary) {
-                    Text(ipo.status, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp), fontWeight = FontWeight.Bold)
+                    Text(displayStatus, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp), fontWeight = FontWeight.Bold)
                 }
             }
             
