@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\IPO\app\src\main\AndroidManifest.xml:2:1-29:12
-INJECTED from E:\IPO\app\src\main\AndroidManifest.xml:2:1-29:12
-INJECTED from E:\IPO\app\src\main\AndroidManifest.xml:2:1-29:12
-INJECTED from E:\IPO\app\src\main\AndroidManifest.xml:2:1-29:12
+ADDED from E:\IPO\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from E:\IPO\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from E:\IPO\app\src\main\AndroidManifest.xml:2:1-30:12
+INJECTED from E:\IPO\app\src\main\AndroidManifest.xml:2:1-30:12
 MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\Admin\.gradle\caches\8.13\transforms\8ce84787b345c794c855a7ec5248e936\transformed\jetified-coil-compose-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.firebase:firebase-auth:22.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\295083cc38e17832d7d6a45d6e171846\transformed\jetified-firebase-auth-22.3.0\AndroidManifest.xml:17:1-75:12
 MERGED from [com.google.firebase:firebase-firestore:24.10.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e059e5d9721037ce8ce3f59f42561ed5\transformed\jetified-firebase-firestore-24.10.0\AndroidManifest.xml:2:1-26:12
@@ -149,9 +149,13 @@ uses-permission#android.permission.WRITE_CALENDAR
 ADDED from E:\IPO\app\src\main\AndroidManifest.xml:7:5-73
 	android:name
 		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:7:22-70
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from E:\IPO\app\src\main\AndroidManifest.xml:8:5-77
+	android:name
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:8:22-74
 application
-ADDED from E:\IPO\app\src\main\AndroidManifest.xml:10:5-27:19
-INJECTED from E:\IPO\app\src\main\AndroidManifest.xml:10:5-27:19
+ADDED from E:\IPO\app\src\main\AndroidManifest.xml:11:5-28:19
+INJECTED from E:\IPO\app\src\main\AndroidManifest.xml:11:5-28:19
 MERGED from [com.google.firebase:firebase-auth:22.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\295083cc38e17832d7d6a45d6e171846\transformed\jetified-firebase-auth-22.3.0\AndroidManifest.xml:28:5-73:19
 MERGED from [com.google.firebase:firebase-auth:22.3.0] C:\Users\Admin\.gradle\caches\8.13\transforms\295083cc38e17832d7d6a45d6e171846\transformed\jetified-firebase-auth-22.3.0\AndroidManifest.xml:28:5-73:19
 MERGED from [com.google.firebase:firebase-firestore:24.10.0] C:\Users\Admin\.gradle\caches\8.13\transforms\e059e5d9721037ce8ce3f59f42561ed5\transformed\jetified-firebase-firestore-24.10.0\AndroidManifest.xml:13:5-24:19
@@ -225,37 +229,37 @@ MERGED from [com.google.android.play:core-common:2.0.2] C:\Users\Admin\.gradle\c
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.12.0] C:\Users\Admin\.gradle\caches\8.13\transforms\3c445c68f977e00a0c4f06c6476189e7\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:16:9-35
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:17:9-35
 	android:label
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:15:9-41
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:16:9-41
 	android:roundIcon
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:14:9-47
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:15:9-47
 	android:icon
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:13:9-42
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:14:9-42
 	android:allowBackup
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:12:9-35
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:13:9-35
 	android:theme
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:17:9-48
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:18:9-48
 	android:name
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:11:9-39
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:12:9-39
 activity#com.IPO.Tracker.MainActivity
-ADDED from E:\IPO\app\src\main\AndroidManifest.xml:18:9-26:20
+ADDED from E:\IPO\app\src\main\AndroidManifest.xml:19:9-27:20
 	android:exported
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:20:13-36
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:21:13-36
 	android:theme
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:21:13-52
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:22:13-52
 	android:name
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:19:13-41
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:20:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from E:\IPO\app\src\main\AndroidManifest.xml:22:13-25:29
+ADDED from E:\IPO\app\src\main\AndroidManifest.xml:23:13-26:29
 action#android.intent.action.MAIN
-ADDED from E:\IPO\app\src\main\AndroidManifest.xml:23:17-69
+ADDED from E:\IPO\app\src\main\AndroidManifest.xml:24:17-69
 	android:name
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:23:25-66
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:24:25-66
 category#android.intent.category.LAUNCHER
-ADDED from E:\IPO\app\src\main\AndroidManifest.xml:24:17-77
+ADDED from E:\IPO\app\src\main\AndroidManifest.xml:25:17-77
 	android:name
-		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:24:27-74
+		ADDED from E:\IPO\app\src\main\AndroidManifest.xml:25:27-74
 uses-sdk
 INJECTED from E:\IPO\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from E:\IPO\app\src\main\AndroidManifest.xml

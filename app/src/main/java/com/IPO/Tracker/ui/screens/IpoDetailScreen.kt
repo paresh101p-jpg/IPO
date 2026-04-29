@@ -40,7 +40,7 @@ import java.util.TimeZone
 @Composable
 fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
     val context = LocalContext.current
-    val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
+    val isLoggedIn = try { FirebaseAuth.getInstance().currentUser != null } catch (e: Exception) { false }
     var calendarMessage by remember { mutableStateOf("") }
     var showSnackbar by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -197,7 +197,7 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
             
             RiskMeter(redFlags = ipo.red_flags)
             
-            HypeMeter(hypeLevel = ipo.hype_meter)
+            HypeMeter(hypeLevel = ipo.hype_meter ?: "Medium")
 
             // Rating Section
             Card(

@@ -156,7 +156,7 @@ fun BuybackCard(company: String, price: String, size: String, recordDate: String
 @Composable
 fun BuybackDetailScreen(buyback: BuybackData, onBackClick: () -> Unit) {
     val context = LocalContext.current
-    val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
+    val isLoggedIn = try { FirebaseAuth.getInstance().currentUser != null } catch (e: Exception) { false }
     var showSnackbar by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 

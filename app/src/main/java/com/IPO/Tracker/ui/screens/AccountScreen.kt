@@ -41,8 +41,8 @@ import kotlinx.coroutines.launch
 fun AccountScreen(onPolicyClick: () -> Unit = {}) {
     val context = LocalContext.current
     val activity = LocalContext.current as? Activity
-    val auth = FirebaseAuth.getInstance()
-    var currentUser by remember { mutableStateOf(auth.currentUser) }
+    val auth = try { FirebaseAuth.getInstance() } catch (e: Exception) { null }
+    var currentUser by remember { mutableStateOf(auth?.currentUser) }
     var isLoading by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
@@ -61,7 +61,7 @@ fun AccountScreen(onPolicyClick: () -> Unit = {}) {
                 val account = task.getResult(ApiException::class.java)
                 account?.idToken?.let { idToken ->
                     val credential = GoogleAuthProvider.getCredential(idToken, null)
-                    auth.signInWithCredential(credential).addOnCompleteListener { authTask ->
+                    auth?.signInWithCredential(credential)?.addOnCompleteListener { authTask ->
                         if (authTask.isSuccessful) {
                             currentUser = auth.currentUser
                         }
@@ -138,7 +138,7 @@ fun AccountScreen(onPolicyClick: () -> Unit = {}) {
                             Spacer(modifier = Modifier.height(16.dp))
                             Button(
                                 onClick = { 
-                                    auth.signOut()
+                                    auth?.signOut()
                                     googleSignInClient.signOut()
                                     currentUser = null
                                 }, 
