@@ -226,11 +226,16 @@ fun computeBadge(ipo: IpoData): String {
         }
         "open" -> {
             val closeDate = parseDate(ipo.closeDate)
-            val diff = if (closeDate != null) closeDate.time - now else -1L
+            // Add 23 hours and 59 minutes to treat close date as the end of the day
+            val closeTimeEndOfDay = closeDate?.let { it.time + (24 * 60 * 60 * 1000) - 1 } ?: -1L
+            val diff = closeTimeEndOfDay - now
             if (diff > 0) {
                 val days = diff / (1000 * 60 * 60 * 24)
-                if (days >= 1) "⏳ Closes in: ${days}d" else "⚠️ Sirf aaj baki!"
-            } else "✅ Subscription Closed"
+                val hours = (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                if (days >= 1) "⏳ Closes in: ${days}d ${hours}h" else "⚠️ Sirf aaj ${hours}h baki!"
+            } else {
+                "✅ Subscription Closed"
+            }
         }
         else -> "✅ Closed | 🚀 Listing: ${ipo.listingDate ?: "TBD"}"
     }
