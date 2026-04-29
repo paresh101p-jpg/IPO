@@ -98,11 +98,11 @@ fun BuybackScreen(viewModel: IpoViewModel, onBuybackClick: (String) -> Unit) {
                 items(filteredBuybacks) { buyback ->
                     BuybackCard(
                         company = buyback.name,
-                        price = buyback.buybackPrice,
-                        size = buyback.issueSizeAmount,
-                        recordDate = buyback.recordDate,
-                        status = buyback.status,
-                        ratio = buyback.buybackRatio,
+                        price = buyback.buybackPrice ?: "TBA",
+                        size = buyback.issueSizeAmount ?: "TBA",
+                        recordDate = buyback.recordDate ?: "TBA",
+                        status = buyback.status ?: "Upcoming",
+                        ratio = buyback.buybackRatio ?: "TBA",
                         onClick = { onBuybackClick(buyback.id) }
                     )
                 }
@@ -209,12 +209,12 @@ fun BuybackDetailScreen(buyback: BuybackData, onBackClick: () -> Unit) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                         Text("Buyback Price", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text(buyback.buybackPrice, fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onSurface)
+                        Text(buyback.buybackPrice ?: "TBA", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onSurface)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                         Text("Record Date", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Text(buyback.recordDate, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.secondary)
+                        Text(buyback.recordDate ?: "TBA", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.secondary)
                     }
                 }
             }
@@ -243,24 +243,24 @@ fun BuybackDetailScreen(buyback: BuybackData, onBackClick: () -> Unit) {
             }
 
             Text("About Buyback", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-            Text(buyback.aboutCompany, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(buyback.aboutCompany ?: "Information pending.", color = MaterialTheme.colorScheme.onSurfaceVariant)
 
             Text("Important Dates", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
             Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) { Text("Record Date"); Text(buyback.recordDate, fontWeight = FontWeight.Bold) }
+                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) { Text("Record Date"); Text(buyback.recordDate ?: "TBA", fontWeight = FontWeight.Bold) }
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) { Text("Open Date"); Text(buyback.openDate, fontWeight = FontWeight.Bold) }
+                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) { Text("Open Date"); Text(buyback.openDate ?: "TBA", fontWeight = FontWeight.Bold) }
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) { Text("Close Date"); Text(buyback.closeDate, fontWeight = FontWeight.Bold) }
+                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) { Text("Close Date"); Text(buyback.closeDate ?: "TBA", fontWeight = FontWeight.Bold) }
                 }
             }
             
             Text("How to Participate", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-            Text(buyback.howToParticipate, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(buyback.howToParticipate ?: "Apply via your broker's dashboard.", color = MaterialTheme.colorScheme.onSurfaceVariant)
             
             Text("Calculation", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-            Text(buyback.investmentCalculation, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(buyback.investmentCalculation ?: "Not available.", color = MaterialTheme.colorScheme.onSurfaceVariant)
             
             Spacer(modifier = Modifier.height(32.dp))
         }
