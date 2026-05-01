@@ -36,12 +36,13 @@ def sync_sheet_to_app():
                 all_ipos.append({
                     "id": f"IPO_{row.get('Name', 'Unknown').replace(' ', '_')[:20]}",
                     "name": row.get('Name', 'Unknown'),
-                    "price": row.get('Price', 'TBA'),
+                    "offerPrice": row.get('Price', row.get('Offer Price', 'TBA')),
                     "lotSize": str(row.get('Lot Size', 'TBA')),
                     "gmp": row.get('GMP', 'TBA'),
                     "type": "Mainboard",
                     "status": row.get('Status', 'Upcoming'),
                     "openDate": row.get('Open Date', None),
+                    "closeDate": row.get('Close Date', None),
                     "listingDate": row.get('Listing Date', None)
                 })
         except Exception as e:
@@ -56,12 +57,13 @@ def sync_sheet_to_app():
                 all_ipos.append({
                     "id": f"IPO_{row.get('Name', 'Unknown').replace(' ', '_')[:20]}",
                     "name": row.get('Name', 'Unknown'),
-                    "price": row.get('Price', 'TBA'),
+                    "offerPrice": row.get('Price', row.get('Offer Price', 'TBA')),
                     "lotSize": str(row.get('Lot Size', 'TBA')),
                     "gmp": row.get('GMP', 'TBA'),
                     "type": "SME",
                     "status": row.get('Status', 'Upcoming'),
                     "openDate": row.get('Open Date', None),
+                    "closeDate": row.get('Close Date', None),
                     "listingDate": row.get('Listing Date', None)
                 })
         except Exception as e:

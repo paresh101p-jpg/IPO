@@ -140,12 +140,13 @@ def sync_from_sheet():
                     all_ipos.append({
                         "id": f"IPO_{row.get('Name', 'Unknown').replace(' ', '_')[:20]}",
                         "name": row.get('Name', 'Unknown'),
-                        "price": row.get('Price', 'TBA'),
+                        "offerPrice": row.get('Price', row.get('Offer Price', 'TBA')),
                         "lotSize": str(row.get('Lot Size', 'TBA')),
                         "gmp": row.get('GMP', 'TBA'),
                         "type": t,
                         "status": row.get('Status', 'Upcoming'),
                         "openDate": row.get('Open Date', None),
+                        "closeDate": row.get('Close Date', None),
                         "listingDate": row.get('Listing Date', None)
                     })
             except: pass
