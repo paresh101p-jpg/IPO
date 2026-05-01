@@ -86,7 +86,8 @@ data class NewsData(
     val headline: String,
     val summary: String,
     val imageUrl: String,
-    val date: String
+    val date: String,
+    val url: String
 )
 
 data class DematAccount(

@@ -53,9 +53,30 @@ def get_real_data_snapshot():
             {"name": "Standard Glass Lining Technology", "status": "DRHP Filed", "type": "Mainboard", "details": "Awaiting Approval"}
         ],
         "announcements": [
-            {"id": "1", "headline": "NSE Announces New IPO Listing Dates for May", "date": "01-May-2026", "url": "https://www.nseindia.com/"},
-            {"id": "2", "headline": "SEBI Approves 3 New Mainboard DRHPs", "date": "30-Apr-2026", "url": "https://www.sebi.gov.in/"},
-            {"id": "3", "headline": "Bagmane REIT IPO to open on May 5th", "date": "29-Apr-2026", "url": "https://www.moneycontrol.com/"}
+            {
+                "id": "1", 
+                "headline": "NSE Announces New IPO Listing Dates for May", 
+                "summary": "The National Stock Exchange has released the tentative listing schedule for upcoming Mainboard and SME IPOs. Click to view full details.",
+                "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=800",
+                "date": "01-May-2026", 
+                "url": "https://www.nseindia.com/"
+            },
+            {
+                "id": "2", 
+                "headline": "SEBI Approves 3 New Mainboard DRHPs", 
+                "summary": "Market regulator SEBI has given the green light to three major companies for their upcoming initial public offerings.",
+                "imageUrl": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=800",
+                "date": "30-Apr-2026", 
+                "url": "https://www.sebi.gov.in/"
+            },
+            {
+                "id": "3", 
+                "headline": "Bagmane REIT IPO to open on May 5th", 
+                "summary": "One of India's largest REITs is ready to hit the primary market next week with a premium offering.",
+                "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+                "date": "29-Apr-2026", 
+                "url": "https://www.moneycontrol.com/"
+            }
         ]
     }
 
