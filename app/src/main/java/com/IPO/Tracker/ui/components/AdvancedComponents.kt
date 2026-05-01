@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.IPO.Tracker.model.PeerData
 import com.IPO.Tracker.ui.theme.AccentDanger
 import com.IPO.Tracker.ui.theme.AccentSecondary
+import com.IPO.Tracker.util.*
 
 @Composable
 fun WhaleAlertBanner(message: String) {
@@ -49,11 +50,11 @@ fun WhaleAlertBanner(message: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NetProfitCalculator(gmp: String, lotSizeStr: String?) {
-    // Basic extraction
-    val gmpValue = gmp.filter { it.isDigit() }.toIntOrNull() ?: 0
-    val lotSize = lotSizeStr?.filter { it.isDigit() }.let { if (it.isNullOrEmpty()) 0 else it.toInt() }
+    // Better extraction using Utils
+    val gmpValue = parseFirstFloat(gmp)
+    val lotSize = extractNumbers(lotSizeStr).firstOrNull() ?: 0
     
-    val grossProfit = gmpValue * lotSize
+    val grossProfit = (gmpValue * lotSize).toInt()
     
     // Broker List
     val brokers = listOf(

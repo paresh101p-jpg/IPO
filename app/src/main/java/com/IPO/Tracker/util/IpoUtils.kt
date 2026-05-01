@@ -42,9 +42,20 @@ fun inferIpoStatus(ipo: IpoData): String {
 }
 
 fun extractNumbers(text: String?): List<Int> {
-    return text
-        ?.let { Regex("\\d+").findAll(it).mapNotNull { match -> match.value.replace(",", "").toIntOrNull() }.toList() }
-        .orEmpty()
+    if (text == null) return emptyList()
+    // Remove percentages and anything in brackets to avoid extracting those numbers
+    val sanitized = text.replace(Regex("\\(.*?\\)"), "").replace("%", "")
+    return Regex("\\d+").findAll(sanitized.replace(",", ""))
+        .mapNotNull { it.value.toIntOrNull() }
+        .toList()
+}
+
+fun parseFirstFloat(text: String?): Float {
+    if (text == null) return 0f
+    // Extract the first number (including decimal) before any brackets or percentage
+    val sanitized = text.replace(Regex("\\(.*?\\)"), "").replace("%", "")
+    val match = Regex("(\\d+\\.?\\d*)").find(sanitized.replace(",", ""))
+    return match?.value?.toFloatOrNull() ?: 0f
 }
 
 fun formatTotalAmount(priceStr: String, lotSizeStr: String?): String {
