@@ -32,9 +32,9 @@ def get_real_data_snapshot():
     """Manual snapshot of real data for high accuracy (May 2026)"""
     return {
         "mainboard": [
-            {"name": "Bagmane REIT", "openDate": "05-May", "closeDate": "07-May", "offerPrice": "₹100", "lotSize": "-", "status": "Upcoming", "gmp": "TBA"},
+            {"name": "Bagmane REIT", "openDate": "05-May", "closeDate": "07-May", "offerPrice": "₹100", "lotSize": "150", "status": "Upcoming", "gmp": "TBA"},
             {"name": "OnEMI Technology (Kissht)", "openDate": "30-Apr", "closeDate": "05-May", "offerPrice": "₹162 - ₹171", "lotSize": "87", "status": "Open", "gmp": "₹4.5"},
-            {"name": "Citius Transnet InvIT", "openDate": "17-Apr", "closeDate": "22-Apr", "offerPrice": "₹100", "lotSize": "-", "status": "Closed", "gmp": "₹0"},
+            {"name": "Citius Transnet InvIT", "openDate": "17-Apr", "closeDate": "22-Apr", "offerPrice": "₹100", "lotSize": "100", "status": "Closed", "gmp": "₹0"},
             {"name": "Propshare Celestia", "openDate": "10-Apr", "closeDate": "16-Apr", "offerPrice": "₹10,50,000", "lotSize": "1", "status": "Closed", "gmp": "₹0"},
             {"name": "Om Power Transmission", "openDate": "09-Apr", "closeDate": "13-Apr", "offerPrice": "₹175", "lotSize": "85", "status": "Closed", "gmp": "₹12"},
             {"name": "Powerica", "openDate": "24-Mar", "closeDate": "27-Mar", "offerPrice": "₹395", "lotSize": "37", "status": "Closed", "gmp": "₹45"}
@@ -75,8 +75,11 @@ def main():
                 if d: ws.append_rows(d)
                 print(f"Updated {t}")
 
-            up("Mainboard", ["Name", "Price", "GMP", "Status", "Open Date", "Close Date"], [[i['name'], i['offerPrice'], i['gmp'], i['status'], i['openDate'], i['closeDate']] for i in snapshot['mainboard']])
-            up("SME", ["Name", "Price", "GMP", "Status", "Open Date", "Close Date"], [[i['name'], i['offerPrice'], i['gmp'], i['status'], i['openDate'], i['closeDate']] for i in snapshot['sme']])
+            # Headers now separate Price and Lot Size
+            ipo_headers = ["Name", "Price", "Lot Size (Shares)", "GMP", "Status", "Open Date", "Close Date"]
+            
+            up("Mainboard", ipo_headers, [[i['name'], i['offerPrice'], i['lotSize'], i['gmp'], i['status'], i['openDate'], i['closeDate']] for i in snapshot['mainboard']])
+            up("SME", ipo_headers, [[i['name'], i['offerPrice'], i['lotSize'], i['gmp'], i['status'], i['openDate'], i['closeDate']] for i in snapshot['sme']])
             up("Upcoming", ["Name", "Status", "Type", "Details"], [[i['name'], i['status'], i['type'], i['details']] for i in snapshot['upcoming']])
             up("News", ["Headline", "Date", "URL"], [[i['headline'], i['date'], i['url']] for i in snapshot['announcements']])
         except Exception as e: print(f"Sheet Error: {e}")
@@ -93,7 +96,6 @@ def main():
         i['type'] = "SME"
         i['logoUrl'] = f"https://ui-avatars.com/api/?name={i['name']}&background=random"
         all_ipos.append(i)
-    # Add Upcoming to JSON if the app supports it (optional, usually apps show them as status=Upcoming)
     for i in snapshot['upcoming']:
         all_ipos.append({
             "id": f"UP_{i['name'].replace(' ', '_')}",
