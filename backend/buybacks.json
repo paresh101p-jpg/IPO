@@ -9,12 +9,12 @@
         "logoUrl": "https://ui-avatars.com/api/?name=Bajaj Auto Ltd&background=random&color=fff&size=128"
     },
     {
-        "id": "BB_TATA_Consultancy_Ser",
-        "name": "TATA Consultancy Services",
+        "id": "BB_TCS",
+        "name": "TCS",
         "buybackPrice": "\u20b94,150",
         "openDate": "01-Dec-2023",
         "closeDate": "07-Dec-2023",
         "status": "Closed",
-        "logoUrl": "https://ui-avatars.com/api/?name=TATA Consultancy Services&background=random&color=fff&size=128"
+        "logoUrl": "https://ui-avatars.com/api/?name=TCS&background=random&color=fff&size=128"
     }
 ]
