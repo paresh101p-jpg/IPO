@@ -104,7 +104,7 @@ def infer_status(open_date_str, close_date_str):
     return "Upcoming"
 
 def main():
-    print("🚀 Starting Master IPO + Buyback Data Ecosystem...")
+    print("Starting Master IPO + Buyback Data Ecosystem...")
     
     # 1. Fetch IPO Data
     api_ipos = fetch_indian_api("ipo")

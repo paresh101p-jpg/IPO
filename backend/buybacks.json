@@ -1,1 +1,20 @@
-[]
+[
+    {
+        "id": "BB_Bajaj_Auto_Ltd",
+        "name": "Bajaj Auto Ltd",
+        "buybackPrice": "\u20b910,000",
+        "openDate": "06-Mar-2024",
+        "closeDate": "13-Mar-2024",
+        "status": "Closed",
+        "logoUrl": "https://ui-avatars.com/api/?name=Bajaj Auto Ltd&background=random&color=fff&size=128"
+    },
+    {
+        "id": "BB_TATA_Consultancy_Ser",
+        "name": "TATA Consultancy Services",
+        "buybackPrice": "\u20b94,150",
+        "openDate": "01-Dec-2023",
+        "closeDate": "07-Dec-2023",
+        "status": "Closed",
+        "logoUrl": "https://ui-avatars.com/api/?name=TATA Consultancy Services&background=random&color=fff&size=128"
+    }
+]
