@@ -199,9 +199,9 @@ def main():
             data = [[i['name'], i['buybackPrice'], i['openDate'], i['closeDate'], i['status']] for i in final_buybacks]
             if data: ws.append_rows(data)
             
-            print("✅ Google Sheets Updated successfully.")
+            print("Google Sheets Updated successfully.")
         except Exception as e:
-            print(f"❌ Sheet Update Error: {e}")
+            print(f"Sheet Update Error: {e}")
 
     # 4. Save to JSON for App
     with open(os.path.join(BASE_PATH, 'ipos.json'), 'w') as f:
@@ -209,7 +209,7 @@ def main():
     with open(os.path.join(BASE_PATH, 'buybacks.json'), 'w') as f:
         json.dump(final_buybacks, f, indent=4)
     
-    print(f"✅ Pipeline Finished. IPOs: {len(merged_ipos)}, Buybacks: {len(final_buybacks)}")
+    print(f"Pipeline Finished. IPOs: {len(merged_ipos)}, Buybacks: {len(final_buybacks)}")
 
 if __name__ == "__main__":
     main()
