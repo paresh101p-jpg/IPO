@@ -60,3 +60,35 @@ fun formatTotalAmount(priceStr: String, lotSizeStr: String?): String {
         if (minTotal == maxTotal) "₹$minTotal" else "₹${minTotal} - ₹${maxTotal}"
     }
 }
+fun computeBadge(ipo: IpoData): String {
+    val now = System.currentTimeMillis()
+    return when (inferIpoStatus(ipo).lowercase()) {
+        "upcoming" -> {
+            val isDateTba = ipo.openDate.isNullOrBlank() || ipo.openDate.equals("TBA", ignoreCase = true) || ipo.openDate == "-"
+            if (isDateTba) {
+                "📌 To Be Announced"
+            } else {
+                val openDate = parseDate(ipo.openDate)
+                val diff = if (openDate != null) openDate.time - now else -1L
+                val dateRange = "${ipo.openDate} → ${ipo.closeDate}"
+                if (diff > 0) {
+                    val days = diff / (1000 * 60 * 60 * 24)
+                    if (days >= 1) "📌 $dateRange | ⏰ ${days}d mein khulega" else "📌 $dateRange | 🔥 Aaj khul raha hai!"
+                } else "📌 $dateRange"
+            }
+        }
+        "open" -> {
+            val closeDate = parseDate(ipo.closeDate)
+            val closeTimeEndOfDay = closeDate?.let { it.time + (24 * 60 * 60 * 1000) - 1 } ?: -1L
+            val diff = closeTimeEndOfDay - now
+            if (diff > 0) {
+                val days = diff / (1000 * 60 * 60 * 24)
+                val hours = (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+                if (days >= 1) "⏳ Closes in: ${days}d ${hours}h" else "⚠️ Sirf aaj ${hours}h baki!"
+            } else {
+                "✅ Subscription Closed"
+            }
+        }
+        else -> "✅ Closed | 🚀 Listing: ${ipo.listingDate ?: "TBD"}"
+    }
+}
