@@ -1,1 +1,172 @@
-[]
+[
+    {
+        "name": "Bagmane REIT",
+        "openDate": "05-May",
+        "closeDate": "07-May",
+        "offerPrice": "100",
+        "lotSize": "-",
+        "status": "Upcoming",
+        "gmp": "TBA",
+        "id": "MB_Bagmane_REIT",
+        "type": "Mainboard",
+        "logoUrl": "https://ui-avatars.com/api/?name=Bagmane REIT&background=random"
+    },
+    {
+        "name": "OnEMI Technology (Kissht)",
+        "openDate": "30-Apr",
+        "closeDate": "05-May",
+        "offerPrice": "171",
+        "lotSize": "87",
+        "status": "Open",
+        "gmp": "4.5",
+        "id": "MB_OnEMI_Technology_(Kissht)",
+        "type": "Mainboard",
+        "logoUrl": "https://ui-avatars.com/api/?name=OnEMI Technology (Kissht)&background=random"
+    },
+    {
+        "name": "Citius Transnet InvIT",
+        "openDate": "17-Apr",
+        "closeDate": "22-Apr",
+        "offerPrice": "100",
+        "lotSize": "-",
+        "status": "Closed",
+        "gmp": "0",
+        "id": "MB_Citius_Transnet_InvIT",
+        "type": "Mainboard",
+        "logoUrl": "https://ui-avatars.com/api/?name=Citius Transnet InvIT&background=random"
+    },
+    {
+        "name": "Propshare Celestia",
+        "openDate": "10-Apr",
+        "closeDate": "16-Apr",
+        "offerPrice": "10,50,000",
+        "lotSize": "1",
+        "status": "Closed",
+        "gmp": "0",
+        "id": "MB_Propshare_Celestia",
+        "type": "Mainboard",
+        "logoUrl": "https://ui-avatars.com/api/?name=Propshare Celestia&background=random"
+    },
+    {
+        "name": "Om Power Transmission",
+        "openDate": "09-Apr",
+        "closeDate": "13-Apr",
+        "offerPrice": "175",
+        "lotSize": "85",
+        "status": "Closed",
+        "gmp": "12",
+        "id": "MB_Om_Power_Transmission",
+        "type": "Mainboard",
+        "logoUrl": "https://ui-avatars.com/api/?name=Om Power Transmission&background=random"
+    },
+    {
+        "name": "Powerica",
+        "openDate": "24-Mar",
+        "closeDate": "27-Mar",
+        "offerPrice": "395",
+        "lotSize": "37",
+        "status": "Closed",
+        "gmp": "45",
+        "id": "MB_Powerica",
+        "type": "Mainboard",
+        "logoUrl": "https://ui-avatars.com/api/?name=Powerica&background=random"
+    },
+    {
+        "name": "Recode Studios",
+        "openDate": "05-May",
+        "closeDate": "07-May",
+        "offerPrice": "158",
+        "lotSize": "800",
+        "status": "Upcoming",
+        "gmp": "35",
+        "id": "SME_Recode_Studios",
+        "type": "SME",
+        "logoUrl": "https://ui-avatars.com/api/?name=Recode Studios&background=random"
+    },
+    {
+        "name": "Value 360 Communications",
+        "openDate": "04-May",
+        "closeDate": "06-May",
+        "offerPrice": "98",
+        "lotSize": "1200",
+        "status": "Upcoming",
+        "gmp": "15",
+        "id": "SME_Value_360_Communications",
+        "type": "SME",
+        "logoUrl": "https://ui-avatars.com/api/?name=Value 360 Communications&background=random"
+    },
+    {
+        "name": "Amba Auto Sales",
+        "openDate": "27-Apr",
+        "closeDate": "29-Apr",
+        "offerPrice": "135",
+        "lotSize": "1000",
+        "status": "Closed",
+        "gmp": "20",
+        "id": "SME_Amba_Auto_Sales",
+        "type": "SME",
+        "logoUrl": "https://ui-avatars.com/api/?name=Amba Auto Sales&background=random"
+    },
+    {
+        "name": "Adisoft Technologies",
+        "openDate": "23-Apr",
+        "closeDate": "27-Apr",
+        "offerPrice": "172",
+        "lotSize": "800",
+        "status": "Closed",
+        "gmp": "40",
+        "id": "SME_Adisoft_Technologies",
+        "type": "SME",
+        "logoUrl": "https://ui-avatars.com/api/?name=Adisoft Technologies&background=random"
+    },
+    {
+        "id": "UP_R.K.Steel_Manufacturing_Co.Ltd.",
+        "name": "R.K.Steel Manufacturing Co.Ltd.",
+        "type": "Mainboard",
+        "status": "Upcoming",
+        "gmp": "TBA",
+        "openDate": "TBA",
+        "closeDate": "TBA",
+        "logoUrl": "https://ui-avatars.com/api/?name=R.K.Steel Manufacturing Co.Ltd.&background=random"
+    },
+    {
+        "id": "UP_Hindustan_Laboratories_Ltd.",
+        "name": "Hindustan Laboratories Ltd.",
+        "type": "Mainboard",
+        "status": "Upcoming",
+        "gmp": "TBA",
+        "openDate": "TBA",
+        "closeDate": "TBA",
+        "logoUrl": "https://ui-avatars.com/api/?name=Hindustan Laboratories Ltd.&background=random"
+    },
+    {
+        "id": "UP_PlaySimple_Games_Ltd.",
+        "name": "PlaySimple Games Ltd.",
+        "type": "Mainboard",
+        "status": "Upcoming",
+        "gmp": "TBA",
+        "openDate": "TBA",
+        "closeDate": "TBA",
+        "logoUrl": "https://ui-avatars.com/api/?name=PlaySimple Games Ltd.&background=random"
+    },
+    {
+        "id": "UP_MV_Electrosystems_Ltd.",
+        "name": "MV Electrosystems Ltd.",
+        "type": "Mainboard",
+        "status": "Upcoming",
+        "gmp": "TBA",
+        "openDate": "TBA",
+        "closeDate": "TBA",
+        "logoUrl": "https://ui-avatars.com/api/?name=MV Electrosystems Ltd.&background=random"
+    },
+    {
+        "id": "UP_Standard_Glass_Lining_Technology",
+        "name": "Standard Glass Lining Technology",
+        "type": "Mainboard",
+        "status": "Upcoming",
+        "gmp": "TBA",
+        "openDate": "TBA",
+        "closeDate": "TBA",
+        "logoUrl": "https://ui-avatars.com/api/?name=Standard Glass Lining Technology&background=random"
+    }
+]
