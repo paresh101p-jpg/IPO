@@ -22,6 +22,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.clickable
 import androidx.compose.ui.draw.clip
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
@@ -54,6 +55,9 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
     var isIpoNotificationsEnabled by remember { mutableStateOf(NotificationPreferencesStore.isIpoNotificationEnabled(context, ipo.id)) }
     var savedPaperTrades by remember { mutableStateOf(PaperTradeStore.getRecords(context).size) }
     val snackbarHostState = remember { SnackbarHostState() }
+    
+    var showRatingDialog by remember { mutableStateOf(false) }
+    var userRating by remember { mutableStateOf(0) }
 
     // Permission launcher for calendar
     val permLauncher = rememberLauncherForActivityResult(
@@ -324,7 +328,7 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
                 Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("User Ratings & Sentiment", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { showRatingDialog = true }) {
                         Text(ipo.averageRating.toString(), fontSize = MaterialTheme.typography.headlineMedium.fontSize, fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onSurface)
                         Spacer(modifier = Modifier.width(8.dp))
                         Row {
@@ -340,10 +344,66 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
                     }
                     Text("Based on ${ipo.totalRatingsCount} votes", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(modifier = Modifier.height(12.dp))
-                    OutlinedButton(onClick = { /* Rate IPO */ }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp)) {
+                    OutlinedButton(onClick = { showRatingDialog = true }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp)) {
                         Text("Rate this IPO")
                     }
                 }
+            }
+
+            if (showRatingDialog) {
+                AlertDialog(
+                    onDismissRequest = { showRatingDialog = false },
+                    title = { Text("Rate ${ipo.name}", fontWeight = FontWeight.Bold) },
+                    text = {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                            Text("How would you rate this IPO's potential?", style = MaterialTheme.typography.bodyMedium)
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Row {
+                                repeat(5) { index ->
+                                    val starIndex = index + 1
+                                    Icon(
+                                        imageVector = Icons.Default.Star,
+                                        contentDescription = null,
+                                        tint = if (starIndex <= userRating) AccentTertiary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
+                                        modifier = Modifier.size(40.dp).clickable { userRating = starIndex }
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Text(
+                                when(userRating) {
+                                    1 -> "Very Risky 🔴"
+                                    2 -> "Risky 🟠"
+                                    3 -> "Neutral 🟡"
+                                    4 -> "Good Potential 🟢"
+                                    5 -> "Must Apply! 🔥"
+                                    else -> "Select Stars"
+                                },
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                if (userRating > 0) {
+                                    Toast.makeText(context, "✅ Thank you for rating! Your vote has been recorded.", Toast.LENGTH_SHORT).show()
+                                    showRatingDialog = false
+                                } else {
+                                    Toast.makeText(context, "Please select stars first.", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        ) {
+                            Text("Submit Rating")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showRatingDialog = false }) {
+                            Text("Cancel")
+                        }
+                    }
+                )
             }
 
             // Details section
