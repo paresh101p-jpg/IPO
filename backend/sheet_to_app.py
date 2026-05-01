@@ -77,10 +77,11 @@ def sync_sheet_to_app():
             rows = ws_bb.get_all_records()
             for row in rows:
                 buybacks.append({
+                    "id": f"BB_{row.get('Company', 'Unknown').replace(' ', '_')[:20]}",
                     "name": row.get('Company', row.get('Name', 'Unknown')),
-                    "price": row.get('Price', 'TBA'),
-                    "open": row.get('Open', 'TBA'),
-                    "close": row.get('Close', 'TBA'),
+                    "buybackPrice": row.get('Price', 'TBA'),
+                    "openDate": row.get('Open', 'TBA'),
+                    "closeDate": row.get('Close', 'TBA'),
                     "status": row.get('Status', 'Upcoming')
                 })
         except Exception as e:
