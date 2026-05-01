@@ -28,9 +28,24 @@ def get_gspread_client():
     creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
     return gspread.authorize(creds)
 
+def calculate_gmp_percent(price_str, gmp_str):
+    try:
+        # Extract highest number from price (Upper Band)
+        prices = [int(n.replace(',', '')) for n in re.findall(r'\d+', price_str)]
+        gmps = [float(n.replace(',', '')) for n in re.findall(r'\d+\.?\d*', gmp_str)]
+        if not prices or not gmps: return ""
+        
+        price = max(prices)
+        gmp = gmps[0]
+        if price == 0: return ""
+        
+        percent = (gmp / price) * 100
+        return f"({percent:.1f}%)"
+    except: return ""
+
 def get_real_data_snapshot():
-    """Manual snapshot of real data for high accuracy (May 2026)"""
-    return {
+    """Manual snapshot of real data with GMP % calculation"""
+    data = {
         "mainboard": [
             {"name": "Bagmane REIT", "openDate": "05-May", "closeDate": "07-May", "offerPrice": "₹100", "lotSize": "150", "status": "Upcoming", "gmp": "TBA"},
             {"name": "OnEMI Technology (Kissht)", "openDate": "30-Apr", "closeDate": "05-May", "offerPrice": "₹162 - ₹171", "lotSize": "87", "status": "Open", "gmp": "₹4.5"},
@@ -79,6 +94,14 @@ def get_real_data_snapshot():
             }
         ]
     }
+    
+    # Process GMP to include %
+    for category in ["mainboard", "sme"]:
+        for item in data[category]:
+            perc = calculate_gmp_percent(item["offerPrice"], item["gmp"])
+            if perc: item["gmp"] = f"{item['gmp']} {perc}"
+            
+    return data
 
 def main():
     print("Syncing Data for App and Sheet...")
@@ -96,8 +119,7 @@ def main():
                 if d: ws.append_rows(d)
                 print(f"Updated {t}")
 
-            # Headers now use Lot Size
-            ipo_headers = ["Name", "Price", "Lot Size", "GMP", "Status", "Open Date", "Close Date"]
+            ipo_headers = ["Name", "Price", "Lot Size", "GMP (Gain %)", "Status", "Open Date", "Close Date"]
             
             up("Mainboard", ipo_headers, [[i['name'], i['offerPrice'], i['lotSize'], i['gmp'], i['status'], i['openDate'], i['closeDate']] for i in snapshot['mainboard']])
             up("SME", ipo_headers, [[i['name'], i['offerPrice'], i['lotSize'], i['gmp'], i['status'], i['openDate'], i['closeDate']] for i in snapshot['sme']])

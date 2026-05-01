@@ -18,7 +18,7 @@
         "offerPrice": "\u20b9162 - \u20b9171",
         "lotSize": "87",
         "status": "Open",
-        "gmp": "\u20b94.5",
+        "gmp": "\u20b94.5 (2.6%)",
         "id": "MB_OnEMI_Technology_(Kissht)",
         "type": "Mainboard",
         "logoUrl": "https://ui-avatars.com/api/?name=OnEMI Technology (Kissht)&background=random"
@@ -30,7 +30,7 @@
         "offerPrice": "\u20b9100",
         "lotSize": "100",
         "status": "Closed",
-        "gmp": "\u20b90",
+        "gmp": "\u20b90 (0.0%)",
         "id": "MB_Citius_Transnet_InvIT",
         "type": "Mainboard",
         "logoUrl": "https://ui-avatars.com/api/?name=Citius Transnet InvIT&background=random"
@@ -42,7 +42,7 @@
         "offerPrice": "\u20b910,50,000",
         "lotSize": "1",
         "status": "Closed",
-        "gmp": "\u20b90",
+        "gmp": "\u20b90 (0.0%)",
         "id": "MB_Propshare_Celestia",
         "type": "Mainboard",
         "logoUrl": "https://ui-avatars.com/api/?name=Propshare Celestia&background=random"
@@ -54,7 +54,7 @@
         "offerPrice": "\u20b9175",
         "lotSize": "85",
         "status": "Closed",
-        "gmp": "\u20b912",
+        "gmp": "\u20b912 (6.9%)",
         "id": "MB_Om_Power_Transmission",
         "type": "Mainboard",
         "logoUrl": "https://ui-avatars.com/api/?name=Om Power Transmission&background=random"
@@ -66,7 +66,7 @@
         "offerPrice": "\u20b9395",
         "lotSize": "37",
         "status": "Closed",
-        "gmp": "\u20b945",
+        "gmp": "\u20b945 (11.4%)",
         "id": "MB_Powerica",
         "type": "Mainboard",
         "logoUrl": "https://ui-avatars.com/api/?name=Powerica&background=random"
@@ -78,7 +78,7 @@
         "offerPrice": "\u20b9150 - \u20b9158",
         "lotSize": "800",
         "status": "Upcoming",
-        "gmp": "\u20b935",
+        "gmp": "\u20b935 (22.2%)",
         "id": "SME_Recode_Studios",
         "type": "SME",
         "logoUrl": "https://ui-avatars.com/api/?name=Recode Studios&background=random"
@@ -90,7 +90,7 @@
         "offerPrice": "\u20b992 - \u20b998",
         "lotSize": "1200",
         "status": "Upcoming",
-        "gmp": "\u20b915",
+        "gmp": "\u20b915 (15.3%)",
         "id": "SME_Value_360_Communications",
         "type": "SME",
         "logoUrl": "https://ui-avatars.com/api/?name=Value 360 Communications&background=random"
@@ -102,7 +102,7 @@
         "offerPrice": "\u20b9135",
         "lotSize": "1000",
         "status": "Closed",
-        "gmp": "\u20b920",
+        "gmp": "\u20b920 (14.8%)",
         "id": "SME_Amba_Auto_Sales",
         "type": "SME",
         "logoUrl": "https://ui-avatars.com/api/?name=Amba Auto Sales&background=random"
@@ -114,7 +114,7 @@
         "offerPrice": "\u20b9172",
         "lotSize": "800",
         "status": "Closed",
-        "gmp": "\u20b940",
+        "gmp": "\u20b940 (23.3%)",
         "id": "SME_Adisoft_Technologies",
         "type": "SME",
         "logoUrl": "https://ui-avatars.com/api/?name=Adisoft Technologies&background=random"
