@@ -1,11 +1,11 @@
 import json
-import re
 import requests
 from bs4 import BeautifulSoup
 import os
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
+import time
 
 # Configuration
 SPREADSHEET_ID = "1doykulvqjsyM2_gZn1SL7L4SreHZUq4Ixbg530hn5mQ"
@@ -27,111 +27,132 @@ def get_gspread_client():
     creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
     return gspread.authorize(creds)
 
-def scrape_chittorgarh_ipos():
-    print("Scraping Chittorgarh for live IPO data...")
-    all_ipos = []
+def parse_chittorgarh_date(date_str):
+    if not date_str or "TBA" in date_str.upper() or "-" in date_str:
+        return None
     try:
-        # Chittorgarh main IPO page
-        url = "https://www.chittorgarh.com/report/mainboard-ipo-list-in-india-2024-25/34/"
+        # Expected: "Apr 30, 2026" or "30-Apr-2026"
+        date_str = date_str.replace(",", "").strip()
+        for fmt in ["%b %d %Y", "%d-%b-%Y", "%d %b %Y"]:
+            try: return datetime.strptime(date_str, fmt)
+            except: continue
+    except: pass
+    return None
+
+def fetch_gmp():
+    gmp_data = {}
+    try:
+        r = SESSION.get("https://ipowatch.in/ipo-grey-market-premium-latest-ipo-gmp/", headers=HEADERS, timeout=15)
+        soup = BeautifulSoup(r.content, 'html.parser')
+        rows = soup.find_all('tr')
+        for row in rows:
+            cols = row.find_all(['td', 'th'])
+            if len(cols) >= 2:
+                name = cols[0].text.strip().lower()
+                gmp = cols[1].text.strip()
+                gmp_data[name] = gmp
+    except: pass
+    return gmp_data
+
+def scrape_ipo_list(url, ipo_type):
+    print(f"Scraping {ipo_type} IPOs from {url}...")
+    ipos = []
+    try:
         r = SESSION.get(url, headers=HEADERS, timeout=15)
         soup = BeautifulSoup(r.content, 'html.parser')
+        table = soup.find('table')
+        if not table: return []
         
-        tables = soup.find_all('table')
-        for table in tables:
-            rows = table.find_all('tr')[1:]
-            for row in rows:
-                cols = row.find_all('td')
-                if len(cols) >= 6:
-                    name = cols[0].text.strip()
-                    open_date = cols[1].text.strip()
-                    close_date = cols[2].text.strip()
-                    listing_date = cols[3].text.strip() if len(cols) > 3 else "TBA"
-                    price = cols[4].text.strip() if len(cols) > 4 else "TBA"
-                    
-                    status = "Upcoming"
-                    now = datetime.now()
-                    try:
-                        # Simple logic for status based on dates
-                        if "Jan" in open_date or "Feb" in open_date or "Mar" in open_date or "Apr" in open_date or "May" in open_date:
-                            # This is a bit complex to parse accurately without a library, but let's assume "Open" if today matches
-                            # For now, we'll mark as Open if it's currently live on the site
-                            pass
-                    except: pass
-                    
-                    all_ipos.append({
-                        "name": name,
-                        "offerPrice": price,
-                        "openDate": open_date,
-                        "closeDate": close_date,
-                        "listingDate": listing_date,
-                        "type": "Mainboard",
-                        "status": "Open" if "OnEMI" in name or "Kissht" in name else "Upcoming" # Force OnEMI as Open for now as verified
-                    })
+        rows = table.find_all('tr')[1:]
+        for row in rows:
+            cols = row.find_all('td')
+            if len(cols) >= 5:
+                name = cols[0].text.strip()
+                open_date_str = cols[1].text.strip()
+                close_date_str = cols[2].text.strip()
+                listing_date_str = cols[3].text.strip() if len(cols) > 3 else "TBA"
+                price_str = cols[4].text.strip() if len(cols) > 4 else "TBA"
+                
+                # Determine Status
+                status = "Upcoming"
+                now = datetime.now()
+                open_dt = parse_chittorgarh_date(open_date_str)
+                close_dt = parse_chittorgarh_date(close_date_str)
+                
+                if open_dt and close_dt:
+                    if open_dt <= now <= close_dt.replace(hour=23, minute=59):
+                        status = "Open"
+                    elif now > close_dt:
+                        status = "Closed"
+                
+                ipos.append({
+                    "name": name,
+                    "offerPrice": price_str,
+                    "openDate": open_date_str,
+                    "closeDate": close_date_str,
+                    "listingDate": listing_date_str,
+                    "type": ipo_type,
+                    "status": status
+                })
     except Exception as e:
-        print(f"Chittorgarh Scrape Error: {e}")
+        print(f"Error scraping {ipo_type}: {e}")
+    return ipos
+
+def main():
+    print("Starting Automated IPO Data Pipeline...")
     
-    # Add SME from a different page or same logic
-    return all_ipos
-
-def sync_from_sheet():
-    print("Syncing from Google Sheet to local JSON...")
-    client = get_gspread_client()
-    if not client: return []
-
-    try:
-        sh = client.open_by_key(SPREADSHEET_ID)
-        all_ipos = []
-        
-        # Priority 1: Read from standard tabs
-        for t in ["Mainboard", "SME"]:
-            try:
-                ws = sh.worksheet(t)
-                rows = ws.get_all_records()
-                for row in rows:
-                    status = str(row.get('Status', 'Upcoming')).capitalize()
-                    if status == "Live": status = "Open"
-                    
-                    all_ipos.append({
-                        "id": f"IPO_{row.get('Name', 'Unknown').replace(' ', '_')[:20]}",
-                        "name": row.get('Name', 'Unknown'),
-                        "offerPrice": row.get('Price', row.get('Offer Price', 'TBA')),
-                        "lotSize": str(row.get('Lot Size', 'TBA')),
-                        "gmp": str(row.get('GMP', 'TBA')),
-                        "type": t,
-                        "status": status,
-                        "openDate": row.get('Open Date', ''),
-                        "closeDate": row.get('Close Date', ''),
-                        "listingDate": row.get('Listing Date', '')
-                    })
-            except: pass
-        
-        # Save to JSON
-        with open(os.path.join(BASE_PATH, 'ipos.json'), 'w') as f:
-            json.dump(all_ipos, f, indent=4)
-            
-        print(f"Successfully synced {len(all_ipos)} IPOs from Sheet.")
-        return all_ipos
-    except Exception as e:
-        print(f"Sheet Sync Error: {e}")
-        return []
-
-def scrape_and_save_ipos():
-    # Fetch real data and update Sheet first
-    real_ipos = scrape_chittorgarh_ipos()
+    # 1. Scrape Data
+    mainboard_url = "https://www.chittorgarh.com/report/mainboard-ipo-list-in-india-2024-25/34/"
+    sme_url = "https://www.chittorgarh.com/report/sme-ipo-list-in-india-2024-25/84/"
     
+    all_ipos = scrape_ipo_list(mainboard_url, "Mainboard") + scrape_ipo_list(sme_url, "SME")
+    gmp_map = fetch_gmp()
+    
+    # Enrich with GMP
+    for ipo in all_ipos:
+        ipo['gmp'] = "TBA"
+        for k, v in gmp_map.items():
+            if k in ipo['name'].lower() or ipo['name'].lower() in k:
+                ipo['gmp'] = v
+                break
+    
+    # 2. Update Google Sheet
     client = get_gspread_client()
     if client:
         try:
             sh = client.open_by_key(SPREADSHEET_ID)
-            # Update Mainboard tab with OnEMI if found
-            ws = sh.worksheet("Mainboard")
-            # For simplicity, we'll just ensure OnEMI is there
-            if any("OnEMI" in i['name'] or "Kissht" in i['name'] for i in real_ipos):
-                # Update logic...
-                pass
-        except: pass
-        
-    return sync_from_sheet()
+            for t in ["Mainboard", "SME"]:
+                ws = sh.worksheet(t)
+                ws.clear()
+                ws.append_row(["Name", "Price", "GMP", "Status", "Open Date", "Close Date", "Listing Date"])
+                data = [
+                    [i['name'], i['offerPrice'], i['gmp'], i['status'], i['openDate'], i['closeDate'], i['listingDate']]
+                    for i in all_ipos if i['type'] == t
+                ]
+                if data: ws.append_rows(data)
+                print(f"Updated {t} tab in Sheet.")
+        except Exception as e:
+            print(f"Sheet Update Error: {e}")
+
+    # 3. Save to JSON (App Source)
+    final_ipos = []
+    for i in all_ipos:
+        final_ipos.append({
+            "id": f"IPO_{i['name'].replace(' ', '_')[:20]}",
+            "name": i['name'],
+            "offerPrice": i['offerPrice'],
+            "gmp": i['gmp'],
+            "status": i['status'],
+            "type": i['type'],
+            "openDate": i['openDate'],
+            "closeDate": i['closeDate'],
+            "listingDate": i['listingDate']
+        })
+    
+    with open(os.path.join(BASE_PATH, 'ipos.json'), 'w') as f:
+        json.dump(final_ipos, f, indent=4)
+    
+    print(f"Pipeline Finished. Total IPOs: {len(final_ipos)}")
 
 if __name__ == "__main__":
-    sync_from_sheet()
+    main()
