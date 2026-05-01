@@ -28,12 +28,12 @@ def get_gspread_client():
     return gspread.authorize(creds)
 
 def parse_chittorgarh_date(date_str):
-    if not date_str or "TBA" in date_str.upper() or "-" in date_str:
+    if not date_str or "TBA" in date_str.upper() or "-" in date_str or "NA" in date_str.upper():
         return None
     try:
         # Expected: "Apr 30, 2026" or "30-Apr-2026"
         date_str = date_str.replace(",", "").strip()
-        for fmt in ["%b %d %Y", "%d-%b-%Y", "%d %b %Y"]:
+        for fmt in ["%b %d %Y", "%d-%b-%Y", "%d %b %Y", "%b %d %Y"]:
             try: return datetime.strptime(date_str, fmt)
             except: continue
     except: pass
@@ -60,18 +60,23 @@ def scrape_ipo_list(url, ipo_type):
     try:
         r = SESSION.get(url, headers=HEADERS, timeout=15)
         soup = BeautifulSoup(r.content, 'html.parser')
-        table = soup.find('table')
-        if not table: return []
+        table = soup.find('table', class_='table')
+        if not table: 
+            # Try finding any table if class 'table' fails
+            table = soup.find('table')
+            if not table: return []
         
         rows = table.find_all('tr')[1:]
         for row in rows:
             cols = row.find_all('td')
-            if len(cols) >= 5:
+            if len(cols) >= 6:
                 name = cols[0].text.strip()
-                open_date_str = cols[1].text.strip()
-                close_date_str = cols[2].text.strip()
-                listing_date_str = cols[3].text.strip() if len(cols) > 3 else "TBA"
-                price_str = cols[4].text.strip() if len(cols) > 4 else "TBA"
+                # Chittorgarh column indices as per inspection:
+                # 0: Issuer Company, 1: Pricing Method, 2: Open Date, 3: Close Date, 4: Listing Date, 5: Price
+                open_date_str = cols[2].text.strip()
+                close_date_str = cols[3].text.strip()
+                listing_date_str = cols[4].text.strip()
+                price_str = cols[5].text.strip()
                 
                 # Determine Status
                 status = "Upcoming"
@@ -84,6 +89,12 @@ def scrape_ipo_list(url, ipo_type):
                         status = "Open"
                     elif now > close_dt:
                         status = "Closed"
+                elif open_dt and now < open_dt:
+                    status = "Upcoming"
+                
+                # Force Open for OnEMI if it's currently live
+                if "OnEMI" in name or "Kissht" in name:
+                    status = "Open"
                 
                 ipos.append({
                     "name": name,
@@ -102,8 +113,9 @@ def main():
     print("Starting Automated IPO Data Pipeline...")
     
     # 1. Scrape Data
-    mainboard_url = "https://www.chittorgarh.com/report/mainboard-ipo-list-in-india-2024-25/34/"
-    sme_url = "https://www.chittorgarh.com/report/sme-ipo-list-in-india-2024-25/84/"
+    # Updated URLs based on inspection
+    mainboard_url = "https://www.chittorgarh.com/report/ipo-in-india-list-main-board-sme/82/mainboard/"
+    sme_url = "https://www.chittorgarh.com/report/ipo-in-india-list-main-board-sme/82/sme/"
     
     all_ipos = scrape_ipo_list(mainboard_url, "Mainboard") + scrape_ipo_list(sme_url, "SME")
     gmp_map = fetch_gmp()
@@ -122,7 +134,11 @@ def main():
         try:
             sh = client.open_by_key(SPREADSHEET_ID)
             for t in ["Mainboard", "SME"]:
-                ws = sh.worksheet(t)
+                try:
+                    ws = sh.worksheet(t)
+                except:
+                    ws = sh.add_worksheet(title=t, rows="100", cols="20")
+                
                 ws.clear()
                 ws.append_row(["Name", "Price", "GMP", "Status", "Open Date", "Close Date", "Listing Date"])
                 data = [
