@@ -40,6 +40,7 @@ import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+import com.IPO.Tracker.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -417,10 +418,9 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    InfoRow("💰 Issue Size", ipo.issueSize ?: "TBD")
-                    InfoRow("📆 Lot Size", "${ipo.lotSize ?: "?"} Shares")
                     InfoRow("🏷️ Price Band", ipo.offerPrice ?: "TBD")
-                    InfoRow("💼 Min Investment", ipo.retailLotsAllowed ?: "TBD")
+                    InfoRow("📆 Lot Size", "${ipo.lotSize ?: "?"}")
+                    InfoRow("💼 Min Investment", ipo.retailLotsAllowed ?: formatTotalAmount(ipo.offerPrice ?: "0", ipo.lotSize))
                     if (!ipo.registrarDetails.isNullOrEmpty()) {
                         InfoRow("🏗️ Registrar", ipo.registrarDetails)
                     }
@@ -482,7 +482,7 @@ fun insertCalendarEventSilently(context: android.content.Context, ipo: IpoData) 
         val cr = context.contentResolver
         val fmt = SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH)
         fmt.timeZone = TimeZone.getDefault()
-
+        
         // Find the primary Google Calendar account ID
         val calCursor = cr.query(
             CalendarContract.Calendars.CONTENT_URI,

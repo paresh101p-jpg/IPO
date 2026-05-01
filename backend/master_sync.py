@@ -96,8 +96,8 @@ def main():
                 if d: ws.append_rows(d)
                 print(f"Updated {t}")
 
-            # Headers now separate Price and Lot Size
-            ipo_headers = ["Name", "Price", "Lot Size (Shares)", "GMP", "Status", "Open Date", "Close Date"]
+            # Headers now use Lot Size
+            ipo_headers = ["Name", "Price", "Lot Size", "GMP", "Status", "Open Date", "Close Date"]
             
             up("Mainboard", ipo_headers, [[i['name'], i['offerPrice'], i['lotSize'], i['gmp'], i['status'], i['openDate'], i['closeDate']] for i in snapshot['mainboard']])
             up("SME", ipo_headers, [[i['name'], i['offerPrice'], i['lotSize'], i['gmp'], i['status'], i['openDate'], i['closeDate']] for i in snapshot['sme']])
