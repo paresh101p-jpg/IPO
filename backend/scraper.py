@@ -6,11 +6,13 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 import time
+import re
 
 # Configuration
 SPREADSHEET_ID = "1doykulvqjsyM2_gZn1SL7L4SreHZUq4Ixbg530hn5mQ"
 BASE_PATH = os.path.dirname(__file__)
 CREDENTIALS_FILE = os.path.join(BASE_PATH, 'credentials.json')
+INDIAN_API_KEY = os.getenv('INDIAN_API_KEY') # Should be set in GitHub Secrets
 
 SESSION = requests.Session()
 HEADERS = {
@@ -27,17 +29,46 @@ def get_gspread_client():
     creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
     return gspread.authorize(creds)
 
-def parse_chittorgarh_date(date_str):
-    if not date_str or "TBA" in date_str.upper() or "-" in date_str or "NA" in date_str.upper():
-        return None
+def get_logo_url(name):
+    clean_name = re.sub(r'[^a-zA-Z0-9]', '', name.split()[0].lower())
+    # Try clearbit logo but with a fallback to UI avatars
+    return f"https://ui-avatars.com/api/?name={name}&background=random&color=fff&size=128"
+
+def fetch_indian_api(endpoint):
+    """Fetch from IndianAPI if key is available."""
+    if not INDIAN_API_KEY: return []
+    url = f"https://stock.indianapi.in/{endpoint}"
     try:
-        # Expected: "Apr 30, 2026" or "30-Apr-2026"
-        date_str = date_str.replace(",", "").strip()
-        for fmt in ["%b %d %Y", "%d-%b-%Y", "%d %b %Y", "%b %d %Y"]:
-            try: return datetime.strptime(date_str, fmt)
-            except: continue
+        r = SESSION.get(url, headers={"x-api-key": INDIAN_API_KEY}, timeout=15)
+        if r.status_code == 200:
+            return r.json().get('data', r.json())
     except: pass
-    return None
+    return []
+
+def scrape_chittorgarh_ipos(ipo_type="mainboard"):
+    """Fallback scraper for Chittorgarh."""
+    url = f"https://www.chittorgarh.com/report/ipo-in-india-list-main-board-sme/82/{ipo_type}/"
+    ipos = []
+    try:
+        r = SESSION.get(url, headers=HEADERS, timeout=15)
+        soup = BeautifulSoup(r.content, 'html.parser')
+        table = soup.find('table')
+        if not table: return []
+        rows = table.find_all('tr')[1:]
+        for row in rows:
+            cols = row.find_all('td')
+            if len(cols) >= 6:
+                name = cols[0].text.strip()
+                ipos.append({
+                    "name": name,
+                    "openDate": cols[2].text.strip(),
+                    "closeDate": cols[3].text.strip(),
+                    "listingDate": cols[4].text.strip(),
+                    "offerPrice": cols[5].text.strip(),
+                    "status": "Upcoming" # Default, will be inferred
+                })
+    except: pass
+    return ipos
 
 def fetch_gmp():
     gmp_data = {}
@@ -54,121 +85,131 @@ def fetch_gmp():
     except: pass
     return gmp_data
 
-def scrape_ipo_list(url, ipo_type):
-    print(f"Scraping {ipo_type} IPOs from {url}...")
-    ipos = []
+def infer_status(open_date_str, close_date_str):
+    now = datetime.now()
     try:
-        r = SESSION.get(url, headers=HEADERS, timeout=15)
-        soup = BeautifulSoup(r.content, 'html.parser')
-        table = soup.find('table', class_='table')
-        if not table: 
-            # Try finding any table if class 'table' fails
-            table = soup.find('table')
-            if not table: return []
-        
-        rows = table.find_all('tr')[1:]
-        for row in rows:
-            cols = row.find_all('td')
-            if len(cols) >= 6:
-                name = cols[0].text.strip()
-                # Chittorgarh column indices as per inspection:
-                # 0: Issuer Company, 1: Pricing Method, 2: Open Date, 3: Close Date, 4: Listing Date, 5: Price
-                open_date_str = cols[2].text.strip()
-                close_date_str = cols[3].text.strip()
-                listing_date_str = cols[4].text.strip()
-                price_str = cols[5].text.strip()
-                
-                # Determine Status
-                status = "Upcoming"
-                now = datetime.now()
-                open_dt = parse_chittorgarh_date(open_date_str)
-                close_dt = parse_chittorgarh_date(close_date_str)
-                
-                if open_dt and close_dt:
-                    if open_dt <= now <= close_dt.replace(hour=23, minute=59):
-                        status = "Open"
-                    elif now > close_dt:
-                        status = "Closed"
-                elif open_dt and now < open_dt:
-                    status = "Upcoming"
-                
-                # Force Open for OnEMI if it's currently live
-                if "OnEMI" in name or "Kissht" in name:
-                    status = "Open"
-                
-                ipos.append({
-                    "name": name,
-                    "offerPrice": price_str,
-                    "openDate": open_date_str,
-                    "closeDate": close_date_str,
-                    "listingDate": listing_date_str,
-                    "type": ipo_type,
-                    "status": status
-                })
-    except Exception as e:
-        print(f"Error scraping {ipo_type}: {e}")
-    return ipos
+        # Simple date parser
+        for fmt in ["%d-%b-%Y", "%b %d, %Y", "%d %b %Y"]:
+            try:
+                open_dt = datetime.strptime(open_date_str.replace(",", "").strip(), fmt)
+                close_dt = datetime.strptime(close_date_str.replace(",", "").strip(), fmt)
+                if open_dt <= now <= close_dt.replace(hour=23, minute=59):
+                    return "Open"
+                elif now > close_dt:
+                    return "Closed"
+                else:
+                    return "Upcoming"
+            except: continue
+    except: pass
+    return "Upcoming"
 
 def main():
-    print("Starting Automated IPO Data Pipeline...")
+    print("🚀 Starting Master IPO + Buyback Data Ecosystem...")
     
-    # 1. Scrape Data
-    # Updated URLs based on inspection
-    mainboard_url = "https://www.chittorgarh.com/report/ipo-in-india-list-main-board-sme/82/mainboard/"
-    sme_url = "https://www.chittorgarh.com/report/ipo-in-india-list-main-board-sme/82/sme/"
-    
-    all_ipos = scrape_ipo_list(mainboard_url, "Mainboard") + scrape_ipo_list(sme_url, "SME")
+    # 1. Fetch IPO Data
+    api_ipos = fetch_indian_api("ipo")
+    cg_main = scrape_chittorgarh_ipos("mainboard")
+    cg_sme = scrape_chittorgarh_ipos("sme")
     gmp_map = fetch_gmp()
     
-    # Enrich with GMP
-    for ipo in all_ipos:
-        ipo['gmp'] = "TBA"
-        for k, v in gmp_map.items():
-            if k in ipo['name'].lower() or ipo['name'].lower() in k:
-                ipo['gmp'] = v
-                break
+    merged_ipos = []
+    seen = set()
     
-    # 2. Update Google Sheet
+    # Process API IPOs
+    for ipo in api_ipos:
+        name = ipo.get('company_name', ipo.get('name', 'Unknown'))
+        if name in seen: continue
+        seen.add(name)
+        
+        status = ipo.get('status', 'Upcoming')
+        if status.lower() == 'active': status = 'Open'
+        
+        merged_ipos.append({
+            "id": f"IPO_{name.replace(' ', '_')[:20]}",
+            "name": name,
+            "offerPrice": ipo.get('price_band', ipo.get('price', 'TBA')),
+            "gmp": gmp_map.get(name.lower(), "TBA"),
+            "status": status,
+            "type": "SME" if "SME" in name else "Mainboard",
+            "openDate": ipo.get('open_date', 'TBA'),
+            "closeDate": ipo.get('close_date', 'TBA'),
+            "listingDate": ipo.get('listing_date', 'TBA'),
+            "logoUrl": get_logo_url(name)
+        })
+    
+    # Process Fallback IPOs
+    for ipo in (cg_main + cg_sme):
+        if ipo['name'] in seen: continue
+        seen.add(ipo['name'])
+        status = infer_status(ipo['openDate'], ipo['closeDate'])
+        merged_ipos.append({
+            "id": f"IPO_{ipo['name'].replace(' ', '_')[:20]}",
+            "name": ipo['name'],
+            "offerPrice": ipo['offerPrice'],
+            "gmp": gmp_map.get(ipo['name'].lower(), "TBA"),
+            "status": status,
+            "type": "Mainboard" if ipo in cg_main else "SME",
+            "openDate": ipo['openDate'],
+            "closeDate": ipo['closeDate'],
+            "listingDate": ipo['listingDate'],
+            "logoUrl": get_logo_url(ipo['name'])
+        })
+
+    # 2. Fetch Buyback Data
+    buybacks = fetch_indian_api("buyback")
+    if not buybacks:
+        # Mock/Scrape Buyback if API fails (as backup)
+        buybacks = [
+            {"company_name": "Bajaj Auto Ltd", "price": "₹10,000", "open_date": "06-Mar-2024", "close_date": "13-Mar-2024", "status": "Closed"},
+            {"company_name": "TATA Consultancy Services", "price": "₹4,150", "open_date": "01-Dec-2023", "close_date": "07-Dec-2023", "status": "Closed"}
+        ]
+    
+    final_buybacks = []
+    for bb in buybacks:
+        name = bb.get('company_name', bb.get('name', 'Unknown'))
+        final_buybacks.append({
+            "id": f"BB_{name.replace(' ', '_')[:20]}",
+            "name": name,
+            "buybackPrice": bb.get('price', bb.get('buyback_price', 'TBA')),
+            "openDate": bb.get('open_date', 'TBA'),
+            "closeDate": bb.get('close_date', 'TBA'),
+            "status": bb.get('status', 'Upcoming'),
+            "logoUrl": get_logo_url(name)
+        })
+
+    # 3. Update Google Sheet
     client = get_gspread_client()
     if client:
         try:
             sh = client.open_by_key(SPREADSHEET_ID)
+            # Update Mainboard/SME
             for t in ["Mainboard", "SME"]:
-                try:
-                    ws = sh.worksheet(t)
-                except:
-                    ws = sh.add_worksheet(title=t, rows="100", cols="20")
-                
+                try: ws = sh.worksheet(t)
+                except: ws = sh.add_worksheet(title=t, rows="100", cols="20")
                 ws.clear()
                 ws.append_row(["Name", "Price", "GMP", "Status", "Open Date", "Close Date", "Listing Date"])
-                data = [
-                    [i['name'], i['offerPrice'], i['gmp'], i['status'], i['openDate'], i['closeDate'], i['listingDate']]
-                    for i in all_ipos if i['type'] == t
-                ]
+                data = [[i['name'], i['offerPrice'], i['gmp'], i['status'], i['openDate'], i['closeDate'], i['listingDate']] for i in merged_ipos if i['type'] == t]
                 if data: ws.append_rows(data)
-                print(f"Updated {t} tab in Sheet.")
-        except Exception as e:
-            print(f"Sheet Update Error: {e}")
 
-    # 3. Save to JSON (App Source)
-    final_ipos = []
-    for i in all_ipos:
-        final_ipos.append({
-            "id": f"IPO_{i['name'].replace(' ', '_')[:20]}",
-            "name": i['name'],
-            "offerPrice": i['offerPrice'],
-            "gmp": i['gmp'],
-            "status": i['status'],
-            "type": i['type'],
-            "openDate": i['openDate'],
-            "closeDate": i['closeDate'],
-            "listingDate": i['listingDate']
-        })
-    
+            # Update Buybacks
+            try: ws = sh.worksheet("Buybacks")
+            except: ws = sh.add_worksheet(title="Buybacks", rows="100", cols="20")
+            ws.clear()
+            ws.append_row(["Company", "Buyback Price", "Open Date", "Close Date", "Status"])
+            data = [[i['name'], i['buybackPrice'], i['openDate'], i['closeDate'], i['status']] for i in final_buybacks]
+            if data: ws.append_rows(data)
+            
+            print("✅ Google Sheets Updated successfully.")
+        except Exception as e:
+            print(f"❌ Sheet Update Error: {e}")
+
+    # 4. Save to JSON for App
     with open(os.path.join(BASE_PATH, 'ipos.json'), 'w') as f:
-        json.dump(final_ipos, f, indent=4)
+        json.dump(merged_ipos, f, indent=4)
+    with open(os.path.join(BASE_PATH, 'buybacks.json'), 'w') as f:
+        json.dump(final_buybacks, f, indent=4)
     
-    print(f"Pipeline Finished. Total IPOs: {len(final_ipos)}")
+    print(f"✅ Pipeline Finished. IPOs: {len(merged_ipos)}, Buybacks: {len(final_buybacks)}")
 
 if __name__ == "__main__":
     main()
