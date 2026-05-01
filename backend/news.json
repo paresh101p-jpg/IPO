@@ -1,16 +1,107 @@
 [
     {
         "id": "1",
-        "headline": "Market Hits All-Time High as IPO Season Heats Up",
-        "summary": "Nifty and Sensex reach new peaks while several companies file for DRHP.",
-        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e",
-        "date": "29 Apr 2026"
+        "headline": "Infosys appoints Nitin Paranjpe as non-executive vice chairman",
+        "summary": "Infosys has elevated Nitin Paranjpe as the non-executive vice chairman of the company with immediate effect. Paranjpe, who is an independent director of India\u2019s second-largest IT services company, is also the non-executive chairman of Hindustan Unilever and non-executive vice chairman of Heineken.\u25a0",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
     },
     {
         "id": "2",
-        "headline": "SME IPOs Continue to See Record Subscriptions",
-        "summary": "Retail investors show massive interest in the SME segment with 100x plus subscriptions.",
-        "imageUrl": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f",
-        "date": "28 Apr 2026"
+        "headline": "Strong Q4 for HUL, but inflation clouds FY27 outlook",
+        "summary": "A bar of soap, a cup of tea, a pack of detergent\u2014Hindustan Unilever\u2019s (HUL\u2019s) March-quarter performance shows that even the most mundane purchases can tell a larger story about India\u2019s economy . The FMCG giant delivered its fastest growth in three years in Q4.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "3",
+        "headline": "India's oil trade deficit rises despite softer crude prices: Crisil",
+        "summary": "India\u2019s oil trade deficit has increased in the last two fiscals despite softer crude oil prices, underlining a significant distinction between global and domestic oil consumption patterns, rating agency Crisil said on Thursday. Despite falling crude oil prices, barring the current spike since financial year 2023-24 (FY24), India\u2019s oil trade deficit has risen as the country\u2019s oil import growth has outpaced petroleum exports, Crisil said.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "4",
+        "headline": "India plans \u20b951,383 crore ship acquisition to boost energy security",
+        "summary": "Amid disruptions linked to the West Asia conflict, India is moving to secure its energy shipping fleet, placing maritime capacity at the centre of economic resilience. State-run oil and shipping companies are lining up a large-scale vessel acquisition programme, floating tenders for manufacturing 28 vessels, including LPG tankers and medium range (MR) crude oil carriers, in FY27.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "5",
+        "headline": "Bharat Forge to acquire 30% stake in Fortuna Engineering under strategic partnership",
+        "summary": "The completion of the transaction remains subject to the satisfaction of customary conditions precedent and other applicable approvals. Bharat Forge Limited (BFL) on Thursday announced the acquisition of a 30 per cent stake in Fortuna Engineering Private Limited (FEPL or Fortuna) at an equity value of \u20b9129.60 crore, subject to final closing adjustments.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "6",
+        "headline": "Bharat Forge to acquire 30% stake in Fortuna Engineering under strategic partnership",
+        "summary": "Bharat Forge Limited (BFL) on Thursday announced the acquisition of a 30 per cent stake in Fortuna Engineering Private Limited (FEPL or Fortuna) at an equity value of \u20b9129.60 crore, subject to final closing adjustments. Established in 1989, Fortuna Engineering Private Limited is a leading manufacturer of precision-machined engine components for automotive and industrial applications in India.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "7",
+        "headline": "Dr Lal PathLabs Q4FY26 results: Net profit falls 15%; revenue rises 16.6%",
+        "summary": "Diagnostics major Dr Lal PathLabs (DLPL) on Thursday reported a 15.1 per cent year-on-year (Y-o-Y) drop in consolidated net profit for the March quarter (Q4 FY26) to \u20b9156 crore from \u20b9132 crore recorded in the year-ago period.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "8",
+        "headline": "Dr Lal PathLabs Q4FY26 results: Net profit falls 15%; revenue rises 16.6%",
+        "summary": "Diagnostics major Dr Lal PathLabs (DLPL) on Thursday reported a 15.1 per cent year-on-year (Y-o-Y) drop in consolidated net profit for the March quarter (Q4 FY26) to \u20b9156 crore from \u20b9132 crore recorded in the year-ago period.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "9",
+        "headline": "Infosys names Nitin Paranjpe vice chairman; Nandan Nilekani rules out succession move",
+        "summary": "IT major Infosys has appointed Nitin Paranjpe as the non-executive vice chairman of its board with immediate effect, strengthening its leadership structure at the board level. Paranjpe brings deep consumer and global boardroom experience, having served as non-executive chairman of Hindustan Unilever and vice chairman of Heineken.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "10",
+        "headline": "Vedanta eyes three critical minerals, explores rare earth magnets",
+        "summary": "Metals and mining giant Vedanta Limited is aiming to add up to three critical minerals to its portfolio over the next five years, and is evaluating participation in rare earth magnet manufacturing, as the mining conglomerate deepens its play in India's strategic minerals value chain.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "11",
+        "headline": "Indian IT sticks to conservative guidance as visibility remains weak",
+        "summary": "Wipro expects a weak start to FY27, guiding for a sequential revenue change of -2% to flat in constant currency (cc) for Q1. Infosys has projected a modest 1.5% to 3.5% year-on-year growth in cc, indicating a gradual recovery, while HCLTech has forecast 1% to 4% revenue growth in cc for the full year.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "12",
+        "headline": "Bank of India approves \u20b97,500 crore capital raise via Tier-I and Tier-II bonds in FY27",
+        "summary": "State-run Bank of India on Thursday (April 30) said its board has approved raising up to \u20b97,500 crore through the issue of Basel III-compliant Tier-I and Tier-II bonds during FY27. The fundraise will comprise up to \u20b92,500 crore through Tier-I bonds and up to \u20b95,000 crore through Tier-II bonds, the bank said.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "13",
+        "headline": "Sundram Fasteners Q4 net profit rises 30%; declares \u20b94.25 dividend",
+        "summary": "Sundram Fasteners reported a 30% year-on-year rise in net profit to \u20b9161.4 crore for Q4, compared to \u20b9124.4 crore in the same period last year. Revenue for the quarter increased 11% to \u20b91,693 crore versus \u20b91,531 crore a year ago.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "14",
+        "headline": "Sundram Fasteners Q4 net profit rises 30%; declares \u20b94.25 dividend",
+        "summary": "Sundram Fasteners reported a 30% year-on-year rise in net profit to \u20b9161.4 crore for Q4, compared to \u20b9124.4 crore in the same period last year. Revenue for the quarter increased 11% to \u20b91,693 crore versus \u20b91,531 crore a year ago.",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
+    },
+    {
+        "id": "15",
+        "headline": "Central Bank of India reports 30% decline in Q4FY26 at \u20b9724 cr",
+        "summary": "Central Bank of India (CBoI) reported a 30 per cent year-on-year (y-o-y) decline in fourth quarter (Q4FY26) standalone net profit at \u20b9724 crore against \u20b91,034 crore in the year ago quarter as it took a one time impact of recognition of Deferred Tax Asset (DTA).",
+        "imageUrl": "https://images.unsplash.com/photo-1611974714658-66d2c132042e?auto=format&fit=crop&q=80&w=300",
+        "date": "2026-04-30"
     }
 ]

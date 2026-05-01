@@ -2,6 +2,8 @@
 package com.IPO.Tracker.ui.screens
 
 import com.IPO.Tracker.viewmodel.IpoViewModel
+import coil.compose.AsyncImage
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.lazy.items
 
 import androidx.compose.foundation.background
@@ -14,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -98,6 +101,7 @@ fun BuybackScreen(viewModel: IpoViewModel, onBuybackClick: (String) -> Unit) {
                 items(filteredBuybacks) { buyback ->
                     BuybackCard(
                         company = buyback.name,
+                        logoUrl = buyback.logoUrl,
                         price = buyback.buybackPrice ?: "TBA",
                         size = buyback.issueSizeAmount ?: "TBA",
                         recordDate = buyback.recordDate ?: "TBA",
@@ -112,7 +116,7 @@ fun BuybackScreen(viewModel: IpoViewModel, onBuybackClick: (String) -> Unit) {
 }
 
 @Composable
-fun BuybackCard(company: String, price: String, size: String, recordDate: String, status: String, ratio: String, onClick: () -> Unit) {
+fun BuybackCard(company: String, logoUrl: String?, price: String, size: String, recordDate: String, status: String, ratio: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
@@ -121,7 +125,25 @@ fun BuybackCard(company: String, price: String, size: String, recordDate: String
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                Text(company, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (!logoUrl.isNullOrBlank()) {
+                        AsyncImage(
+                            model = logoUrl,
+                            contentDescription = "$company logo",
+                            modifier = Modifier.size(40.dp).clip(RoundedCornerShape(8.dp))
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.List,
+                            contentDescription = "$company logo placeholder",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(40.dp).background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp)).padding(8.dp)
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                    }
+                    Text(company, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                }
                 Badge(containerColor = if (status == "Open") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary) {
                     Text(status, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp))
                 }
@@ -207,6 +229,14 @@ fun BuybackDetailScreen(buyback: BuybackData, onBackClick: () -> Unit) {
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
+                    if (!buyback.logoUrl.isNullOrBlank()) {
+                        AsyncImage(
+                            model = buyback.logoUrl,
+                            contentDescription = "${buyback.name} logo",
+                            modifier = Modifier.size(72.dp).clip(RoundedCornerShape(12.dp)).align(Alignment.CenterHorizontally)
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                         Text("Buyback Price", color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Text(buyback.buybackPrice ?: "TBA", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onSurface)

@@ -35,6 +35,8 @@ import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.*
 
+fun String?.normalizeString(): String = this?.trim()?.lowercase(Locale.getDefault()) ?: ""
+
 @Composable
 fun DashboardScreen(viewModel: IpoViewModel, onIpoClick: (IpoData) -> Unit) {
     val uiState by viewModel.uiState.collectAsState()
@@ -139,14 +141,16 @@ fun DashboardScreen(viewModel: IpoViewModel, onIpoClick: (IpoData) -> Unit) {
                 }
                 is IpoUiState.Success -> {
                     val filteredIpos = state.ipos.filter { ipo ->
+                        val status = inferIpoStatus(ipo).normalizeString()
+                        val type = ipo.type.normalizeString()
                         val statusMatch = when(selectedTab) {
-                            0 -> ipo.status.equals("Open", ignoreCase = true)
-                            1 -> ipo.status.equals("Upcoming", ignoreCase = true)
-                            else -> ipo.status.equals("Closed", ignoreCase = true) || ipo.status.equals("Listed", ignoreCase = true)
+                            0 -> status == "open"
+                            1 -> status == "upcoming"
+                            else -> status == "closed"
                         }
-                        val typeMatch = when(selectedType) {
-                            "All" -> true
-                            else -> ipo.type.equals(selectedType, ignoreCase = true)
+                        val typeMatch = when(selectedType.normalizeString()) {
+                            "all" -> true
+                            else -> type == selectedType.normalizeString()
                         }
                         statusMatch && typeMatch
                     }
@@ -212,9 +216,32 @@ fun parseDate(dateStr: String?): Date? {
     return null
 }
 
+fun inferIpoStatus(ipo: IpoData): String {
+    val now = System.currentTimeMillis()
+    val openDate = parseDate(ipo.openDate)
+    val closeDate = parseDate(ipo.closeDate)
+
+    if (openDate != null && closeDate != null) {
+        val closeEndOfDay = closeDate.time + (24 * 60 * 60 * 1000) - 1
+        if (now in openDate.time..closeEndOfDay) return "Open"
+        if (now < openDate.time) return "Upcoming"
+        if (now > closeEndOfDay) return "Closed"
+    }
+
+    if (openDate != null && now < openDate.time) return "Upcoming"
+    if (closeDate != null && now > closeDate.time) return "Closed"
+
+    return when (ipo.status.normalizeString()) {
+        "open" -> "Open"
+        "upcoming" -> "Upcoming"
+        "closed", "listed" -> "Closed"
+        else -> ipo.status.capitalize(Locale.getDefault())
+    }
+}
+
 fun computeBadge(ipo: IpoData): String {
     val now = System.currentTimeMillis()
-    return when (ipo.status.lowercase()) {
+    return when (inferIpoStatus(ipo).lowercase()) {
         "upcoming" -> {
             val isDateTba = ipo.openDate.isNullOrBlank() || ipo.openDate.equals("TBA", ignoreCase = true) || ipo.openDate == "-"
             if (isDateTba) {
@@ -231,7 +258,6 @@ fun computeBadge(ipo: IpoData): String {
         }
         "open" -> {
             val closeDate = parseDate(ipo.closeDate)
-            // Add 23 hours and 59 minutes to treat close date as the end of the day
             val closeTimeEndOfDay = closeDate?.let { it.time + (24 * 60 * 60 * 1000) - 1 } ?: -1L
             val diff = closeTimeEndOfDay - now
             if (diff > 0) {
@@ -246,12 +272,30 @@ fun computeBadge(ipo: IpoData): String {
     }
 }
 
+fun extractNumbers(text: String?): List<Int> {
+    return text
+        ?.let { Regex("\\d+").findAll(it).mapNotNull { match -> match.value.toIntOrNull() }.toList() }
+        .orEmpty()
+}
+
+fun formatTotalAmount(priceStr: String, lotSizeStr: String?): String {
+    val priceNumbers = extractNumbers(priceStr)
+    val lotSize = lotSizeStr?.let { extractNumbers(it).firstOrNull() } ?: 0
+    if (priceNumbers.isEmpty() || lotSize <= 0) return "TBD"
+
+    return if (priceNumbers.size == 1) {
+        "₹${priceNumbers[0] * lotSize}"
+    } else {
+        val minTotal = priceNumbers.minOrNull()!! * lotSize
+        val maxTotal = priceNumbers.maxOrNull()!! * lotSize
+        if (minTotal == maxTotal) "₹$minTotal" else "₹${minTotal} - ₹${maxTotal}"
+    }
+}
+
 @Composable
 fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
     val priceStr = ipo.offerPrice ?: "0"
-    val priceVal = priceStr.filter { it.isDigit() }.toIntOrNull() ?: 0
-    val lotVal = ipo.lotSize?.filter { it.isDigit() }?.toIntOrNull() ?: 0
-    val totalAmount = if (priceVal > 0 && lotVal > 0) "₹${priceVal * lotVal}" else "TBD"
+    val totalAmount = formatTotalAmount(priceStr, ipo.lotSize)
     val countdownText = SmartIpoBadge(ipo = ipo)
 
     Card(
@@ -260,17 +304,32 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
             .animateContentSize(animationSpec = tween(300))
             .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
-        shape = RoundedCornerShape(20.dp)
+        border = BorderStroke(
+            2.dp,
+            when {
+                inferIpoStatus(ipo).equals("Open", ignoreCase = true) -> MaterialTheme.colorScheme.primary
+                inferIpoStatus(ipo).equals("Upcoming", ignoreCase = true) -> MaterialTheme.colorScheme.secondary
+                else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+            }
+        ),
+        shape = RoundedCornerShape(20.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                // Logo or Initial
-                Box(
-                    modifier = Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(ipo.name.take(1), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                if (!ipo.logoUrl.isNullOrBlank()) {
+                    AsyncImage(
+                        model = ipo.logoUrl,
+                        contentDescription = "${ipo.name} logo",
+                        modifier = Modifier.size(40.dp).clip(CircleShape)
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(ipo.name.take(1), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                    }
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Column(modifier = Modifier.weight(1f)) {
@@ -289,10 +348,15 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
                         )
                     }
                 }
+                val effectiveStatus = inferIpoStatus(ipo)
                 val isDateTba = ipo.openDate.isNullOrBlank() || ipo.openDate.equals("TBA", ignoreCase = true) || ipo.openDate == "-"
-                val displayStatus = if (ipo.status.equals("Upcoming", ignoreCase = true) && isDateTba) "To Be Announced" else ipo.status
+                val displayStatus = if (effectiveStatus.equals("Upcoming", ignoreCase = true) && isDateTba) "To Be Announced" else effectiveStatus
 
-                Badge(containerColor = if (ipo.status.equals("Open", true)) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary) {
+                Badge(containerColor = when {
+                    effectiveStatus.equals("Open", true) -> MaterialTheme.colorScheme.primary
+                    effectiveStatus.equals("Upcoming", true) -> MaterialTheme.colorScheme.secondary
+                    else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+                }) {
                     Text(displayStatus, modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp), fontWeight = FontWeight.Bold)
                 }
             }
@@ -310,7 +374,7 @@ fun IpoCard(ipo: IpoData, onClick: () -> Unit) {
                 }
                 Column(horizontalAlignment = Alignment.End) {
                     Text("GMP", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(ipo.gmp, style = MaterialTheme.typography.bodyMedium, color = AccentSecondary, fontWeight = FontWeight.ExtraBold)
+                    Text(ipo.gmp.ifBlank { "TBA" }, style = MaterialTheme.typography.bodyMedium, color = AccentSecondary, fontWeight = FontWeight.ExtraBold)
                 }
             }
             

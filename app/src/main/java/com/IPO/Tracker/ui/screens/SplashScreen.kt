@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,6 +34,7 @@ fun SplashScreen(onSplashDone: () -> Unit) {
     val textAlpha = remember { Animatable(0f) }
     val taglineAlpha = remember { Animatable(0f) }
     val logoOffset = remember { Animatable(80f) }
+    val density = LocalDensity.current.density
 
     LaunchedEffect(Unit) {
         logoAlpha.animateTo(1f, animationSpec = tween(400))

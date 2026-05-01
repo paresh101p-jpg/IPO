@@ -5,22 +5,30 @@ on:
     - cron: '0 */6 * * *' # Run every 6 hours
   workflow_dispatch: # Allow manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
-          pip install requests beautifulsoup4
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 gspread oauth2client
+
+      - name: Create Credentials File
+        run: |
+          echo '${{ secrets.GCP_CREDENTIALS }}' > backend/credentials.json
 
       - name: Run scraper
         run: python backend/scraper.py
@@ -29,6 +37,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add backend/ipos.json
-          git commit -m "Auto-update IPO data" || echo "No changes to commit"
+          git add backend/*.json
+          git commit -m "Auto-update IPO data from Sheet" || echo "No changes to commit"
           git push

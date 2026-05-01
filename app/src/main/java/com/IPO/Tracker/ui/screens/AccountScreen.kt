@@ -7,12 +7,16 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
@@ -26,6 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.IPO.Tracker.R
+import com.IPO.Tracker.data.DematStore
+import com.IPO.Tracker.data.NotificationPreferencesStore
+import com.IPO.Tracker.data.PaperTradeStore
 import com.IPO.Tracker.ui.theme.AccentSecondary
 import com.IPO.Tracker.ui.theme.AccentTertiary
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -36,14 +43,31 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import android.widget.Toast
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
-fun AccountScreen(onPolicyClick: () -> Unit = {}) {
+fun AccountScreen(viewModel: com.IPO.Tracker.viewmodel.IpoViewModel, onPolicyClick: () -> Unit = {}) {
     val context = LocalContext.current
     val activity = LocalContext.current as? Activity
+    val uiState by viewModel.uiState.collectAsState()
+    val currentIpos = (uiState as? com.IPO.Tracker.viewmodel.IpoUiState.Success)?.ipos.orEmpty()
+    val paperTradeSummary = PaperTradeStore.getSummary(context, currentIpos)
+    val paperTradeDetails = PaperTradeStore.getDetails(context, currentIpos)
+    var showPaperTradeHistory by remember { mutableStateOf(false) }
     val auth = try { FirebaseAuth.getInstance() } catch (e: Exception) { null }
     var currentUser by remember { mutableStateOf(auth?.currentUser) }
     var isLoading by remember { mutableStateOf(false) }
+    var showAddPanDialog by remember { mutableStateOf(false) }
+    var newPanName by remember { mutableStateOf("") }
+    var newPanNumber by remember { mutableStateOf("") }
+    var newDpId by remember { mutableStateOf("") }
+    var newClientId by remember { mutableStateOf("") }
+    var newUpiId by remember { mutableStateOf("") }
+    var savedAccounts by remember { mutableStateOf(DematStore.getAccounts(context)) }
+    var listingAlert by remember { mutableStateOf(NotificationPreferencesStore.isListingAlertEnabled(context)) }
+    var allotmentAlert by remember { mutableStateOf(NotificationPreferencesStore.isAllotmentAlertEnabled(context)) }
+    var gmpAlert by remember { mutableStateOf(NotificationPreferencesStore.isGmpAlertEnabled(context)) }
+    var newsAlert by remember { mutableStateOf(NotificationPreferencesStore.isNewsAlertEnabled(context)) }
     val coroutineScope = rememberCoroutineScope()
 
     // Google Sign-In Setup
@@ -122,18 +146,25 @@ fun AccountScreen(onPolicyClick: () -> Unit = {}) {
                         Spacer(modifier = Modifier.height(16.dp))
                         
                         if (currentUser != null) {
-                            Text("${currentUser?.displayName} (Platinum Investor 🏆)", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                            Text("${currentUser?.displayName}", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                             Text("${currentUser?.email}", color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Spacer(modifier = Modifier.height(16.dp))
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Text("Virtual Coins", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                    Text("🪙 1,45,000", fontWeight = FontWeight.ExtraBold, color = com.IPO.Tracker.ui.theme.AccentTertiary, fontSize = MaterialTheme.typography.titleMedium.fontSize)
-                                }
-                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Text("Paper Trades", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                    Text("12 Won", fontWeight = FontWeight.ExtraBold, color = com.IPO.Tracker.ui.theme.AccentSecondary, fontSize = MaterialTheme.typography.titleMedium.fontSize)
-                                }
+                            Column(
+                                modifier = Modifier.fillMaxWidth().clickable { showPaperTradeHistory = true },
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text("Paper Trades", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text(
+                                    "${paperTradeSummary.selectedCount} selected",
+                                    fontWeight = FontWeight.ExtraBold,
+                                    color = com.IPO.Tracker.ui.theme.AccentSecondary,
+                                    fontSize = MaterialTheme.typography.titleMedium.fontSize
+                                )
+                                Text(
+                                    "${paperTradeSummary.wonCount} Won • ${paperTradeSummary.lossCount} Loss • ${paperTradeSummary.openCount} Open",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
                             }
                             Spacer(modifier = Modifier.height(16.dp))
                             Button(
@@ -172,11 +203,46 @@ fun AccountScreen(onPolicyClick: () -> Unit = {}) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Card(modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("PAN: ABCDE1234F (Primary)", fontWeight = FontWeight.Bold)
-                            Text("Zerodha Demat: 12081600XXXXXX", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
-                            Divider(modifier = Modifier.padding(vertical = 12.dp))
+                            if (savedAccounts.isEmpty()) {
+                                Text("No saved PAN accounts yet.", fontWeight = FontWeight.Bold)
+                                Text(
+                                    "Add your family Demat / PAN details to enable auto-check allotment and reminder support.",
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            } else {
+                                savedAccounts.forEach { account ->
+                                    Column(modifier = Modifier.fillMaxWidth()) {
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Column(modifier = Modifier.weight(1f)) {
+                                                Text(account.name, fontWeight = FontWeight.Bold)
+                                                Text("PAN: ${account.panNumber}", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                                                Text(
+                                                    "DP: ${account.dpId} • Client: ${account.clientId}",
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                    style = MaterialTheme.typography.bodySmall
+                                                )
+                                            }
+                                            IconButton(onClick = {
+                                                DematStore.removeAccount(context, account.id)
+                                                savedAccounts = DematStore.getAccounts(context)
+                                                Toast.makeText(context, "Removed ${account.name}", Toast.LENGTH_SHORT).show()
+                                            }) {
+                                                Icon(Icons.Default.Delete, contentDescription = "Remove account")
+                                            }
+                                        }
+                                        Divider(modifier = Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                                    }
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(8.dp))
                             OutlinedButton(
-                                onClick = { /* Add New PAN */ },
+                                onClick = { showAddPanDialog = true },
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(12.dp)
                             ) {
@@ -186,7 +252,19 @@ fun AccountScreen(onPolicyClick: () -> Unit = {}) {
                             }
                             Spacer(modifier = Modifier.height(8.dp))
                             Button(
-                                onClick = { /* Check All */ },
+                                onClick = {
+                                    if (savedAccounts.isEmpty()) {
+                                        Toast.makeText(context, "Add PAN accounts first to enable auto-check allotment.", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        val availableLinks = currentIpos.count { !it.allotmentLink.isNullOrBlank() }
+                                        Toast.makeText(
+                                            context,
+                                            if (availableLinks > 0) "Auto-check prepared for ${savedAccounts.size} saved PANs and $availableLinks IPO allotment links. Open IPO details to enable alerts."
+                                            else "No IPO allotment links available yet. Please try again when allotment pages are published.",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                },
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(12.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = com.IPO.Tracker.ui.theme.AccentSecondary)
@@ -204,18 +282,51 @@ fun AccountScreen(onPolicyClick: () -> Unit = {}) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Card(modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        var listingAlert by remember { mutableStateOf(true) }
-                        var allotmentAlert by remember { mutableStateOf(true) }
-
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                            Text("Listing Day Alerts", fontWeight = FontWeight.Medium)
-                            Switch(checked = listingAlert, onCheckedChange = { listingAlert = it })
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Listing Day Alerts", fontWeight = FontWeight.Medium)
+                                Text("Receive a notification when an IPO listing date is updated.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Switch(checked = listingAlert, onCheckedChange = {
+                                listingAlert = it
+                                NotificationPreferencesStore.setListingAlertEnabled(context, it)
+                            })
                         }
                         Divider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                            Text("Allotment Status Alerts", fontWeight = FontWeight.Medium)
-                            Switch(checked = allotmentAlert, onCheckedChange = { allotmentAlert = it })
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Allotment Status Alerts", fontWeight = FontWeight.Medium)
+                                Text("Get alerts when allotment status changes for your IPOs.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Switch(checked = allotmentAlert, onCheckedChange = {
+                                allotmentAlert = it
+                                NotificationPreferencesStore.setAllotmentAlertEnabled(context, it)
+                            })
                         }
+                        Divider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("GMP Change Alerts", fontWeight = FontWeight.Medium)
+                                Text("Alert when GMP moves for IPOs you follow.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Switch(checked = gmpAlert, onCheckedChange = {
+                                gmpAlert = it
+                                NotificationPreferencesStore.setGmpAlertEnabled(context, it)
+                            })
+                        }
+                        Divider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("IPO News Alerts", fontWeight = FontWeight.Medium)
+                                Text("Receive news notifications for IPO names you follow.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Switch(checked = newsAlert, onCheckedChange = {
+                                newsAlert = it
+                                NotificationPreferencesStore.setNewsAlertEnabled(context, it)
+                            })
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("For per-IPO alerts, turn on notifications on the IPO detail page.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }
@@ -273,5 +384,103 @@ fun AccountScreen(onPolicyClick: () -> Unit = {}) {
                 }
             }
         }
+    }
+
+    if (showAddPanDialog) {
+        AlertDialog(
+            onDismissRequest = { showAddPanDialog = false },
+            title = { Text("Add Demat / PAN") },
+            text = {
+                Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    OutlinedTextField(
+                        value = newPanName,
+                        onValueChange = { newPanName = it },
+                        label = { Text("Account name") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = newPanNumber,
+                        onValueChange = { newPanNumber = it },
+                        label = { Text("PAN number") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = newDpId,
+                        onValueChange = { newDpId = it },
+                        label = { Text("DP ID") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = newClientId,
+                        onValueChange = { newClientId = it },
+                        label = { Text("Client ID") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = newUpiId,
+                        onValueChange = { newUpiId = it },
+                        label = { Text("UPI ID") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    if (newPanName.isNotBlank() && newPanNumber.isNotBlank()) {
+                        DematStore.addAccount(context, DematStore.createAccount(newPanName, newPanNumber, newDpId, newClientId, newUpiId))
+                        savedAccounts = DematStore.getAccounts(context)
+                        newPanName = ""
+                        newPanNumber = ""
+                        newDpId = ""
+                        newClientId = ""
+                        newUpiId = ""
+                        showAddPanDialog = false
+                        Toast.makeText(context, "PAN account added.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Please enter account name and PAN number.", Toast.LENGTH_SHORT).show()
+                    }
+                }) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showAddPanDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
+    if (showPaperTradeHistory) {
+        AlertDialog(
+            onDismissRequest = { showPaperTradeHistory = false },
+            title = { Text("Paper Trade History") },
+            text = {
+                if (paperTradeDetails.isEmpty()) {
+                    Text("You have not added any IPO to Paper Trades yet.")
+                } else {
+                    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+                        paperTradeDetails.forEach { detail ->
+                            Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                                Text(detail.name, fontWeight = FontWeight.Bold)
+                                Text("Status: ${detail.status} | Result: ${detail.result}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text("Added: ${java.text.SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(java.util.Date(detail.addedAt))}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Divider(modifier = Modifier.padding(top = 8.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f))
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showPaperTradeHistory = false }) {
+                    Text("Close")
+                }
+            }
+        )
     }
 }

@@ -4,7 +4,7 @@
             "outputFile": "com.IPO.Tracker.app-mergeDebugResources-64:/values-en-rXC/values-en-rXC.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.13\\transforms\\29bfa469eed95847fc08b56d631b5aad\\transformed\\jetified-material3-1.1.1\\res\\values-en-rXC\\values-en-rXC.xml",
+                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.11\\transforms\\068918fef0dce29e958cd1b2506453a1\\transformed\\jetified-material3-1.1.1\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.13\\transforms\\3c445c68f977e00a0c4f06c6476189e7\\transformed\\core-1.12.0\\res\\values-en-rXC\\values-en-rXC.xml",
+                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.11\\transforms\\9f4b1a8dfb74a023f83500e0510bcaa9\\transformed\\core-1.12.0\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.13\\transforms\\a1fdf0bea2fe0da6cbd6b56f052f83dd\\transformed\\browser-1.4.0\\res\\values-en-rXC\\values-en-rXC.xml",
+                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.11\\transforms\\666936943c8eb577411a3302eaa261e7\\transformed\\browser-1.4.0\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -55,7 +55,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.13\\transforms\\2a0b3940d712ec7dff8576e422d7cf12\\transformed\\jetified-ui-release\\res\\values-en-rXC\\values-en-rXC.xml",
+                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.11\\transforms\\99ae69a58275e4070b9978cfe320959d\\transformed\\jetified-ui-release\\res\\values-en-rXC\\values-en-rXC.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

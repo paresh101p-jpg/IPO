@@ -1,0 +1,100 @@
+﻿[
+    {
+        "id": "mb_OnEMI",
+        "name": "OnEMI Technology Solutions Ltd",
+        "type": "Mainboard",
+        "status": "Upcoming",
+        "openDate": "30 Apr 2026",
+        "closeDate": "05 May 2026",
+        "offerPrice": "₹162 - ₹171",
+        "lotSize": "50",
+        "gmp": "TBA",
+        "hype_meter": "High",
+        "allotment_prob": "TBD",
+        "aboutCompany": "Fintech company specializing in consumer credit."
+    },
+    {
+        "id": "mb_Swiggy",
+        "name": "Swiggy Ltd",
+        "type": "Mainboard",
+        "status": "Upcoming",
+        "openDate": "TBA",
+        "closeDate": "TBA",
+        "offerPrice": "TBA",
+        "lotSize": "50",
+        "gmp": "TBA",
+        "hype_meter": "High",
+        "allotment_prob": "TBD",
+        "aboutCompany": "India's leading food delivery and quick commerce platform."
+    },
+    {
+        "id": "mb_Shadowfax",
+        "name": "Shadowfax Technologies Ltd",
+        "type": "Mainboard",
+        "status": "Upcoming",
+        "openDate": "TBA",
+        "closeDate": "TBA",
+        "offerPrice": "₹124",
+        "lotSize": "50",
+        "gmp": "TBA",
+        "hype_meter": "Medium",
+        "allotment_prob": "TBD",
+        "aboutCompany": "Logistics and supply chain provider."
+    },
+    {
+        "id": "sme_Amba",
+        "name": "Amba Auto Sales & Services",
+        "type": "SME",
+        "status": "Open",
+        "openDate": "27 Apr 2026",
+        "closeDate": "29 Apr 2026",
+        "offerPrice": "₹130 - ₹135",
+        "lotSize": "2000",
+        "gmp": "₹0 (0.00%)",
+        "hype_meter": "Medium",
+        "allotment_prob": "1.5x",
+        "aboutCompany": "Authorized dealer for commercial vehicles."
+    },
+    {
+        "id": "mb_Accord",
+        "name": "Accord Transformer Ltd",
+        "type": "Mainboard",
+        "status": "Closed",
+        "openDate": "23 Feb 2026",
+        "closeDate": "25 Feb 2026",
+        "listingDate": "02 Mar 2026",
+        "offerPrice": "₹120",
+        "lotSize": "100",
+        "gmp": "₹10",
+        "hype_meter": "Medium",
+        "allotment_prob": "N/A",
+        "aboutCompany": "Transformer manufacturing company."
+    },
+    {
+        "id": "mb_Mehul",
+        "name": "Mehul Telecom Ltd",
+        "type": "Mainboard",
+        "status": "Closed",
+        "openDate": "17 Apr 2026",
+        "closeDate": "21 Apr 2026",
+        "listingDate": "24 Apr 2026",
+        "offerPrice": "₹98",
+        "lotSize": "150",
+        "gmp": "₹3.75",
+        "hype_meter": "Medium",
+        "allotment_prob": "N/A",
+        "aboutCompany": "Telecommunication services."
+    },
+    {
+        "id": "drhp_1", "name": "Clean Max Enviro Energy", "type": "Mainboard", "status": "Upcoming", "openDate": "TBA", "closeDate": "TBA", "offerPrice": "TBD", "lotSize": "50", "gmp": "TBA", "hype_meter": "Medium", "aboutCompany": "Renewable energy solutions."
+    },
+    {
+        "id": "drhp_2", "name": "Avanse Financial Services", "type": "Mainboard", "status": "Upcoming", "openDate": "TBA", "closeDate": "TBA", "offerPrice": "TBD", "lotSize": "50", "gmp": "TBA", "hype_meter": "Medium", "aboutCompany": "Education finance company."
+    },
+    {
+        "id": "drhp_3", "name": "Niva Bupa Health Insurance", "type": "Mainboard", "status": "Upcoming", "openDate": "TBA", "closeDate": "TBA", "offerPrice": "TBD", "lotSize": "50", "gmp": "TBA", "hype_meter": "Medium", "aboutCompany": "Health insurance provider."
+    },
+    {
+        "id": "drhp_4", "name": "One Mobility", "type": "Mainboard", "status": "Upcoming", "openDate": "TBA", "closeDate": "TBA", "offerPrice": "TBD", "lotSize": "50", "gmp": "TBA", "hype_meter": "Medium", "aboutCompany": "Mobility solutions provider."
+    }
+]

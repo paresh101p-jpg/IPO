@@ -4,7 +4,7 @@
             "outputFile": "com.IPO.Tracker.app-mergeDebugResources-64:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.13\\transforms\\276510b4e9a6b025a4c98b763dc65227\\transformed\\jetified-play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",
+                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.11\\transforms\\e512a9332945b2487c8769e8bd8cfc78\\transformed\\jetified-play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",

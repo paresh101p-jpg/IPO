@@ -9,6 +9,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,10 +23,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import com.IPO.Tracker.data.NotificationPreferencesStore
+import com.IPO.Tracker.data.PaperTradeStore
 import com.IPO.Tracker.model.IpoData
 import com.IPO.Tracker.ui.components.HypeMeter
 import com.IPO.Tracker.ui.theme.AccentSecondary
@@ -43,6 +48,10 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
     val isLoggedIn = try { FirebaseAuth.getInstance().currentUser != null } catch (e: Exception) { false }
     var calendarMessage by remember { mutableStateOf("") }
     var showSnackbar by remember { mutableStateOf(false) }
+    var showGmpGraphDialog by remember { mutableStateOf(false) }
+    var isPaperTradeSelected by remember { mutableStateOf(PaperTradeStore.isPaperTradeSelected(context, ipo.id)) }
+    var isIpoNotificationsEnabled by remember { mutableStateOf(NotificationPreferencesStore.isIpoNotificationEnabled(context, ipo.id)) }
+    var savedPaperTrades by remember { mutableStateOf(PaperTradeStore.getRecords(context).size) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     // Permission launcher for calendar
@@ -87,7 +96,16 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
                 color = MaterialTheme.colorScheme.background
             ) {
                 Button(
-                    onClick = { /* Open WebView Link */ },
+                    onClick = {
+                        val link = ipo.allotmentLink
+                        if (!link.isNullOrBlank()) {
+                            val uri = android.net.Uri.parse(link)
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            context.startActivity(intent)
+                        } else {
+                            Toast.makeText(context, "Allotment link not available for this IPO yet.", Toast.LENGTH_SHORT).show()
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth().height(48.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -95,7 +113,7 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
                     )
                 ) {
                     Text(
-                        text = if (ipo.status.equals("Open", true)) "Apply Now" else "Check Allotment",
+                        text = if (inferIpoStatus(ipo).equals("Open", true)) "Apply Now" else "Check Allotment",
                         fontWeight = FontWeight.ExtraBold
                     )
                 }
@@ -119,24 +137,121 @@ fun IpoDetailScreen(ipo: IpoData, onBackClick: () -> Unit) {
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        Text("Offer Price", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = MaterialTheme.typography.titleMedium.fontSize)
-                        Text(ipo.offerPrice ?: "TBD", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onSurface, fontSize = MaterialTheme.typography.titleLarge.fontSize)
+                        if (!ipo.logoUrl.isNullOrBlank()) {
+                            AsyncImage(
+                                model = ipo.logoUrl,
+                                contentDescription = "${ipo.name} logo",
+                                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp))
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(ipo.name.take(1), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+                            }
+                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Offer Price", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = MaterialTheme.typography.titleMedium.fontSize)
+                            Text(ipo.offerPrice ?: "TBD", fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onSurface, fontSize = MaterialTheme.typography.titleLarge.fontSize)
+                        }
                     }
                     Spacer(modifier = Modifier.height(12.dp))
+                    val gmpText = ipo.gmp.ifBlank { "TBA" }
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         Text("Grey Market Premium (GMP)", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = MaterialTheme.typography.titleMedium.fontSize)
-                        Text(ipo.gmp, fontWeight = FontWeight.ExtraBold, color = AccentSecondary, fontSize = MaterialTheme.typography.titleLarge.fontSize)
+                        Text(gmpText, fontWeight = FontWeight.ExtraBold, color = AccentSecondary, fontSize = MaterialTheme.typography.titleLarge.fontSize)
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                     Button(
-                        onClick = { /* Show Graph */ },
+                        onClick = {
+                            if (ipo.gmpTrend.isNullOrEmpty() || ipo.gmpTrend.size < 2) {
+                                Toast.makeText(context, "GMP graph data available nahi hai abhi.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                showGmpGraphDialog = true
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surface),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Text("View GMP Graph", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, fontSize = MaterialTheme.typography.titleMedium.fontSize)
                     }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Button(
+                        onClick = {
+                            val selected = PaperTradeStore.togglePaperTrade(context, ipo.id)
+                            isPaperTradeSelected = selected
+                            savedPaperTrades = PaperTradeStore.getRecords(context).size
+                            calendarMessage = if (selected) "✅ Added to Paper Trades" else "⚠️ Removed from Paper Trades"
+                            showSnackbar = true
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = if (isPaperTradeSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface),
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        border = if (!isPaperTradeSelected) BorderStroke(1.dp, MaterialTheme.colorScheme.primary) else null
+                    ) {
+                        Text(
+                            if (isPaperTradeSelected) "Paper Trade Saved" else "Save as Paper Trade",
+                            color = if (isPaperTradeSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = MaterialTheme.typography.titleMedium.fontSize
+                        )
+                    }
+                    Text(
+                        "Paper Trades saved: $savedPaperTrades",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("IPO Alerts", fontWeight = FontWeight.Bold)
+                            Text(
+                                "Enable notifications for this IPO's GMP, dates, allotment and matched news.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Switch(
+                            checked = isIpoNotificationsEnabled,
+                            onCheckedChange = {
+                                isIpoNotificationsEnabled = NotificationPreferencesStore.toggleIpoNotification(context, ipo.id)
+                                calendarMessage = if (isIpoNotificationsEnabled) "✅ IPO alerts enabled for this IPO" else "⚠️ IPO alerts disabled for this IPO"
+                                showSnackbar = true
+                            }
+                        )
+                    }
                 }
+            }
+
+            if (showGmpGraphDialog) {
+                AlertDialog(
+                    onDismissRequest = { showGmpGraphDialog = false },
+                    title = { Text("GMP Trend Graph") },
+                    text = {
+                        if (!ipo.gmpTrend.isNullOrEmpty() && ipo.gmpTrend.size >= 2) {
+                            Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+                                GmpTrendChart(gmpTrend = ipo.gmpTrend)
+                            }
+                        } else {
+                            Text("GMP graph data abhi available nahi hai. Phir try kariye.")
+                        }
+                    },
+                    confirmButton = {
+                        TextButton(onClick = { showGmpGraphDialog = false }) {
+                            Text("Close")
+                        }
+                    }
+                )
             }
 
             // Calendar Sync Button (Top)

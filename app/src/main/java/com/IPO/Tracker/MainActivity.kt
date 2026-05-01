@@ -116,7 +116,7 @@ fun IpoApp() {
                 BuybackScreen(viewModel = viewModel, onBuybackClick = { id -> navController.navigate("buyback_detail/$id") })
             }
             composable("news") { NewsScreen(viewModel = viewModel) }
-            composable("account") { AccountScreen(onPolicyClick = { navController.navigate("policy") }) }
+            composable("account") { AccountScreen(viewModel = viewModel, onPolicyClick = { navController.navigate("policy") }) }
             
             composable("policy") { PolicyScreen(onBackClick = { navController.popBackStack() }) }
 
