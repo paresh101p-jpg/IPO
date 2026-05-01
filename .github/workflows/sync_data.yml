@@ -30,8 +30,11 @@ jobs:
         run: |
           echo '${{ secrets.GCP_CREDENTIALS }}' > backend/credentials.json
 
-      - name: Run scraper
-        run: python backend/scraper.py
+      - name: Run master sync
+        env:
+          INDIAN_API_KEY: ${{ secrets.INDIAN_API_KEY }}
+          IPONOTIFY_API_KEY: ${{ secrets.IPONOTIFY_API_KEY }}
+        run: python backend/master_sync.py
 
       - name: Commit and push changes
         run: |
