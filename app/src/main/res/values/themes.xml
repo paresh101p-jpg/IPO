@@ -1,5 +1,0 @@
-<resources>
-    <style name="Theme.IPOTracker" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">#000000</item>
-    </style>
-</resources>
